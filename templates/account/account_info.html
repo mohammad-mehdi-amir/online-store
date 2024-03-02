@@ -1,0 +1,93 @@
+{% extends 'account/account_detail.html' %}
+
+{% block content2 %}
+
+<form action="{% url 'profile_info' %}" method="post">
+    {% csrf_token %}
+    <div class="checkout__mian--header">
+        <div class="section__shipping--address__content">
+            <div class="row  shadow-sm" style=" margin: 5px; padding: 10px; border-radius: 10px;">
+                <h2 style="margin-bottom: 10px;">ویرایش اطلاعات کاربری</h2>
+
+                <div class="col-lg-6 mb-12">
+                    <div class="checkout__input--list ">
+                        <label>
+                            <input class="checkout__input--field border-radius-5" placeholder="First name" type="text"
+                                name="first_name" value={{user.first_name}}>
+                        </label>
+                    </div>
+                    {% if form.first_name.errors %}
+                    <div class="alert alert-danger my-3">{{form.first_name.errors}}</div>
+
+                    {% endif %}
+                </div>
+                <div class="col-lg-6 mb-12">
+                    <div class="checkout__input--list">
+                        <label text="last name">
+
+                            <input class="checkout__input--field border-radius-5" placeholder="Last name" type="text"
+                                name="last_name" value={{user.last_name}}>
+                        </label>
+                    </div>
+                    {% if form.last_name.errors %}
+                    <div class="alert alert-danger my-3">{{form.last_name.errors}}</div>
+
+                    {% endif %}
+                </div>
+
+                <div class="col-lg-6 mb-12">
+                    <div class="checkout__input--list">
+                        <label>
+                            <input class="checkout__input--field border-radius-5" placeholder="email" type="email"
+                                name="email" value={{user.email}}>
+                        </label>
+                    </div>
+                    {% if form.email.errors %}
+                    <div class="alert alert-danger my-3">{{form.email.errors}}</div>
+
+                    {% endif %}
+                </div>
+                <div class="col-lg-6 mb-12">
+                    <div class="checkout__input--list">
+                        <label>
+                            <input class="checkout__input--field border-radius-5" placeholder="username" type="text"
+                                name="username" value={{user.username}}>
+                        </label>
+                    </div>
+                    {% if form.username.errors %}
+                    <div class="alert alert-danger my-3">{{form.username.errors}}</div>
+
+                    {% endif %}
+                </div>
+
+                <div class="col-12 mb-12">
+                    <div class="checkout__input--list">
+                        <label>
+                            <input class="checkout__input--field border-radius-5" name="phone_number"
+                                placeholder="phone number" type="text" 
+                                {% if user.phone_number %}
+                                value={{user.phone_number}}>
+                                    {% else %}
+                                {% endif %}
+                        </label>
+                    </div>
+                    {% if form.phone_number.errors %}
+                    <div class="alert alert-danger my-3">{{form.phone_number.errors}}</div>
+
+                    {% endif %}
+                </div>
+                <center><a class="current__price" href="{% url 'account_set_password' %}">
+                        تغییر گذر واژه
+                    </a></center>
+
+
+                <button class="variant__buy--now__btn primary__btn" type="submit">ذخیره اطلاعات</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+
+{% endblock content2 %}

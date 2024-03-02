@@ -1,0 +1,81 @@
+{% extends '_base.html' %}
+
+{% load persian_number %}
+{% load humanize %}
+
+
+{% block content %}
+    
+
+  <!-- cart section start -->
+  <section class="cart__section section--padding">
+    <div class="container">
+        <div class="cart__section--inner">
+            
+                <h2 class="cart__title mb-40">Wishlist</h2>
+                <div class="cart__table">
+                    <table class="cart__table--inner">
+                        <thead class="cart__table--header">
+                            <tr class="cart__table--header__items">
+                                <th class="cart__table--header__list">Product</th>
+                                <th class="cart__table--header__list">Price</th>
+                                <th class="cart__table--header__list text-center">STATUS</th>
+                                <th class="cart__table--header__list text-right">ADD TO CART</th>
+                            </tr>
+                        </thead>
+                        
+                        {% for item in wishlist %}
+                        <tbody class="cart__table--body">
+                            <tr class="cart__table--body__items">
+                                <td class="cart__table--body__list">
+                                    <div class="cart__product d-flex align-items-center">
+                                        <a class="cart__remove--btn" aria-label="search button" href="{% url 'wishlist_remove' item.product.id %}">
+                                            <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="16px" height="16px"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"/></svg>
+                                        </a>
+                                        <div class="cart__thumbnail">
+                                            <a href="{% url 'product_detail' item.product.id %}"><img class="border-radius-5" style="margin: 10px ;" src={{item.product.image.first.image.url}} alt="cart-product"></a>
+                                        </div>
+                                        <div class="cart__content">
+                                            <h4 class="cart__content--title"><a href="{% url 'product_detail' item.product.id %}">{{item.product.title}}</a></h4>
+
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="cart__table--body__list">
+                                    <span class="cart__price">{{item.product.price|intcomma:False|to_persian}} تومان</span>
+                                </td>
+                                <td class="cart__table--body__list text-center">
+                                    <span class="in__stock text__secondary">
+                                        
+                                        {% if item.product.status %}
+                                        ✅
+                                        {% else %}
+                                        ❌
+                                        {% endif %}
+                                            
+                                    </span>
+                                </td>
+                                <td class="cart__table--body__list text-right">
+                                    <a class="wishlist__cart--btn primary__btn" href="{% url 'product_detail' item.product.id %}">Add To Cart</a>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                        {% endfor %}
+                    </table> 
+                            
+                            
+                    <div class="continue__shopping d-flex justify-content-between">
+                        <a class="continue__shopping--link" href="{% url 'home' %}">Continue shopping</a>
+                        <a class="continue__shopping--clear" href="{% url 'product_list' %}">View All Products</a>
+                    </div>
+                </div> 
+            
+        </div>
+    </div>     
+</section>
+<!-- cart section end -->
+
+
+{% endblock content %}
+    

@@ -1,0 +1,160 @@
+{% extends 'account/account_detail.html' %}
+{% load custom_mathfilter %}
+{% load humanize %}
+{% load persian_number %}
+{% block content2 %}
+                    
+
+<!-- <div class="account__wrapper">
+    <div class="account__content">
+        <h2 class="account__content--title h3 mb-20">Orders History</h2>
+        <div class="account__table--area">
+            <table class="account__table">
+                <thead class="account__table--header">
+                    <tr class="account__table--header__child">
+                        <th class="account__table--header__child--items">Order</th>
+                        <th class="account__table--header__child--items">Date</th>
+                        <th class="account__table--header__child--items">Payment Status</th>
+                        <th class="account__table--header__child--items">Fulfillment Status</th>
+                        <th class="account__table--header__child--items">Total</th>	 	 	 	
+                    </tr>
+                </thead>
+                
+                <tbody class="account__table--body mobile__block">
+                    
+                    {% for item in orders %}
+                 
+                    <tr class="account__table--body__child">
+                        <td class="account__table--body__child--items">{{item.id}}</td>
+                        <td class="account__table--body__child--items">{{item.datetime_created}}</td>
+                        <td class="account__table--body__child--items">{{item.peyment_status}}</td>
+                        <td class="account__table--body__child--items">{{item.order_status}}</td>
+                        <td class="account__table--body__child--items">{{item.total_price}} تومان</td>
+                    </tr>
+                    {% endfor %}
+                        
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="account__wrapper">
+    <div class="account__content">
+        <h2 class="account__content--title h3 mb-20">Orders History</h2>
+        <div class="account__table--area">
+            <table class="account__table">
+                <thead class="account__table--header">
+                    <tr class="account__table--header__child">
+                        <th class="account__table--header__child--items">Order</th>
+                        <th class="account__table--header__child--items">Date</th>
+                        <th class="account__table--header__child--items">Payment Status</th>
+                        <th class="account__table--header__child--items">Fulfillment Status</th>
+                        <th class="account__table--header__child--items">Total</th>	 	 	 	
+                    </tr>
+                </thead>
+                <tbody class="account__table--body ">
+                    {% for item in orders %}
+                    <!-- <tr class="account__table--body__child">
+                        <td class="account__table--body__child--items">{{item.id}}</td>
+                        <td class="account__table--body__child--items">{{item.datetime_created}}</td>
+                        <td class="account__table--body__child--items">{{item.peyment_status}}</td>
+                        <td class="account__table--body__child--items">{{item.order_status}}</td>
+                        <td class="account__table--body__child--items">{{item.total_price}} تومان</td>
+                    </tr> -->
+
+
+
+                    <tr class="account__table--body__child">
+                        <td class="account__table--body__child--items">
+                            <strong>Order</strong>
+                            <span>{{item.id}}</span>
+                        </td>
+                        <td class="account__table--body__child--items">
+                            <strong>Date</strong>
+                            <span>{{item.datetime_order}}</span>
+                        </td>
+                        <td class="account__table--body__child--items">
+                            <strong>Payment Status</strong>
+                            <span>{{item.peyment_status}}</span>
+                        </td>
+                        <td class="account__table--body__child--items">
+                            <strong>Fulfillment Status</strong>
+                            <span>{{item.order_status}}</span>
+                        </td>
+                        <td class="account__table--body__child--items">
+                            <strong>Total</strong>
+                            <span>{{item.total_price|intcomma:False|to_persian}} تومان</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+                <!-- <tbody class="account__table--body mobile__block">
+                    
+                    {% for item in roders %}
+                    <tr class="account__table--body__child">
+                        <td class="account__table--body__child--items">
+                            <strong>Order</strong>
+                            <span>{{item.id}}</span>
+                        </td>
+                        <td class="account__table--body__child--items">
+                            <strong>Date</strong>
+                            <span>{{item.datetime_created}}</span>
+                        </td>
+                        <td class="account__table--body__child--items">
+                            <strong>Payment Status</strong>
+                            <span>{{item.peyment_status}}</span>
+                        </td>
+                        <td class="account__table--body__child--items">
+                            <strong>Fulfillment Status</strong>
+                            <span>Unfulfilled</span>
+                        </td>
+                        <td class="account__table--body__child--items">
+                            <strong>Total</strong>
+                            <span>{{item.total_price}} تومان</span>
+                        </td>
+                    </tr>
+                        
+                    {% endfor %}
+                        
+                    
+                </tbody> -->
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content2 %}

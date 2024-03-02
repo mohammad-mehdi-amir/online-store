@@ -1,0 +1,29 @@
+{% extends 'account/account_detail.html' %}
+{% load i18n %}
+
+
+{% block content2 %}
+<!-- <div>
+    <center>
+    <p class="account__menu--list" >{% trans 'Are you sure you want to sign out?' %}</p>
+    <a class="variant__buy--now__btn primary__btn" href="{% url 'account_logout' %}">خروج از حساب کاربری</a></center>
+</div>
+
+         -->
+<form action="{{action_url}}" method="post">
+    {% csrf_token %}
+    <div class="checkout__mian--header">
+        <div class="section__shipping--address__content">
+            <div class="row  shadow-sm" style=" margin: 5px; padding: 10px; border-radius: 10px;">
+                <center>
+                    <p class="account__menu--list" >{% trans 'Are you sure you want to sign out?' %}</p>
+                    <button class="variant__buy--now__btn primary__btn"  type="submit">خروج از حساب کاربری</button></center>
+            </div>
+        </div>
+</form>
+        
+        
+            
+    
+{% endblock content2 %}
+    
