@@ -1,11 +1,14 @@
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from typing import Any
 from django.shortcuts import redirect, render
 from django.views import generic
-
+from django.contrib.auth.decorators import login_required
 from orders.models import Customer
 from .models import Image,Category,Product,Wishlist
 from carts.forms import AddToCartForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.db.models import Q
 # Create your views here.
@@ -36,23 +39,67 @@ def list_product_view(request):
             product_list_sorted=Product.objects.select_related('category','discount').all().order_by('price')
         elif order_method =="3":
             product_list_sorted=Product.objects.select_related('category','discount').all().order_by('-price')
-        elif order_method == "4":
-            product_list_sorted=Product.objects.prefetch_related('order_item').select_related('category','discount').all().order_by('order_item')
         else:
             product_list_sorted=Product.objects.select_related('category','discount').all()   
     
     else:
-        order_method="0"
+        order_method=request.GET.get('order_by')
         product_list_sorted=Product.objects.select_related('category','discount').all()
-    
-    
-    
-    
+     # Pagination
+    paginator = Paginator(product_list_sorted, 4) # Show number products per page
+
+    page = request.GET.get('page')
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        products = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        products = paginator.page(paginator.num_pages)
+
     return render(request,'products/list_product.html',{
-        'products':product_list_sorted,
-        'selected':order_method
+        'products': products,
+        'selected': order_method
     })
     
+    
+    
+    
+    # return render(request,'products/list_product.html',{
+    #     'products':product_list_sorted,
+    #     'selected':order_method
+    # })
+
+
+# class ListProductView(generic.ListView):
+    model = Product
+    template_name = 'products/list_product.html'
+    context_object_name = 'products'
+    context_object_name='products'
+    http_method_names = ["get","post"]
+    def get_queryset(self):
+        if self.request.method =="post":
+        
+            ordering = self.request.POST['order_by']
+            
+            
+            
+            print(ordering)
+
+            if ordering == "1":
+                return Product.objects.all().order_by('-id')
+            elif ordering == "2":
+                return Product.objects.all().order_by('price')
+            elif ordering == "3":
+                return Product.objects.all().order_by('-price')
+            # elif ordering == "4":
+            #     return Product.objects.order_by('-popularity')
+            else:
+                return Product.objects.all()
+        else:
+                return Product.objects.all()
+            
     
 class ListCategoryView(generic.ListView):
     model = Product
@@ -104,9 +151,10 @@ def search_view(request):
         return render(request,'products/list_product.html',{'products':products})
     
 
-
+@method_decorator(login_required, name='dispatch')
 class WishlistView(generic.ListView):
     model=Wishlist
+    
     template_name='products/wishlist.html'
     def get_context_data(self, **kwargs: Any):
         context= super().get_context_data(**kwargs)
@@ -119,7 +167,7 @@ class WishlistView(generic.ListView):
 def add_to_wishlist(request,pk):
 
     try:
-        print('check?......................')
+
         customer_obj=request.user.customer
         print(customer_obj,'<<<,')
         product_obj=Product.objects.select_related('category').get(id=pk)

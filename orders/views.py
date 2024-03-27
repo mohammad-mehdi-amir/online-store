@@ -21,8 +21,10 @@ def order_create(request):
         if order_form.is_valid():
             if len(cart)!=0:
                 
+                
                 order_obj =order_form.save(commit=False)
                 order_obj.customer=request.user.customer
+                order_obj.phone_number=order_form.cleaned_data['phone_number']
                 order_obj.total_price=cart.get_total_price()
                 order_obj.save()
                 try:
@@ -45,24 +47,33 @@ def order_create(request):
                 
                 
                 except Exception as e:
-                    print(e,'-------------------------------')
+                    
                     messages.error(request,_('please try again'))
+                    last_order_info=1
             else:
                 messages.error(request,_('your cart is empty'))
-                
-                
-            
+                last_order_info=1
+                  
         else:
-
+            print(order_form.errors,'<-----')
             messages.error(request,_('your order has not been registered, please try again'))
+            last_order_info=1
     else:
         order_form=AddOrderForm()
+        if request.user.customer.orders.exists():
+            last_order = request.user.customer.orders.last()
+            last_order_info = last_order  # You can access the order fields directly
+
+
+        else:
+            last_order_info=1
     
     
     return render(request,'orders/order_create.html',{
         'form':order_form,
         'province':Province.objects.all(),
         'customer':request.user.customer,
+        'order_info':last_order_info
 
     })
 

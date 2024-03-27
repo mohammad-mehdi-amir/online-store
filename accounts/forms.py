@@ -34,8 +34,28 @@ class CustomUserChangeForm(UserChangeForm):
 
 
 class ChangeInfoForm(forms.Form):
-    first_name=forms.CharField(help_text=_(' '))
+    first_name=forms.CharField(help_text=_(''))
     last_name=forms.CharField(help_text=_(''))
     username=forms.CharField(help_text=_(''))
     email=forms.EmailField(help_text=_(''))
     phone_number=PhoneNumberField(region="IR",help_text=_('phone number'))
+    
+    
+    
+from allauth.account.forms import SignupForm
+
+class CustomSignupForm(SignupForm):
+    phone_number=PhoneNumberField(region="IR",help_text=_('phone number'))
+    def save(self, request):
+        try:
+            user= super(CustomSignupForm,self).save(request)
+            print('pass1')
+            user.phone_number = self.cleaned_data['phone_number']
+            print('pass2')
+            user.save()
+            print('pass3')
+            return user
+        except Exception as e:
+            print(self.cleaned_data['phone_number'],'>-----------')
+            print(e,'<--------')
+    

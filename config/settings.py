@@ -53,21 +53,19 @@ INSTALLED_APPS = [
     'carts',
     'peyments',
     #all atuh
+    # 'django_otp',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     # Other apps…
-    "phonenumber_field",
-    "mathfilters",
-    "ckeditor",
-    "debug_toolbar",
+    'phonenumber_field',
+    'mathfilters',
+    'ckeditor',
+    'debug_toolbar',
     'rosetta',
     'django.contrib.humanize',
+    'crispy_forms',
 
-    
-    
-
-    
 ]
 
 MIDDLEWARE = [
@@ -217,7 +215,7 @@ AUTHENTICATION_BACKENDS = [
 SITE_ID = 1
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
-ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
@@ -227,8 +225,7 @@ LOGIN_REDIRECT_URL ='profile'
 LOGOUT_REDIRECT_URL ='home'
 LOGIN_URL='account_login'
 LOGOUT_URL='account_logout'
-
-
+ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignupForm'}
 
 USE_THOUSAND_SEPARATOR = True
 

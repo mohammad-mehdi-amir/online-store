@@ -44,7 +44,7 @@
 */
 :root {
   --primary-color: #061738;
-  --secondary-color: #8ec185;
+  --secondary-color: #bd2717;
   --yellow-color: #ffc107;
   --text-gray-color: #606060;
   --white-color: #ffffff;
@@ -2367,7 +2367,7 @@ body.overlay__active::before,
 
 .offcanvas__sub_menu_li {
   position: relative;
-  border-top: 1px solid var(--border-color2);
+  border-bottom: 1px solid var(--border-color2);
 }
 
 .offcanvas__sub_menu_item {
@@ -2565,7 +2565,7 @@ body.overlay__active::before,
   position: fixed;
   width: 100%;
   top: 0;
-  background: #72926e ;
+  background:#e2301d;
   left: 0;
   z-index: 99;
   padding: 1.5rem 0;
@@ -4310,6 +4310,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .product__secondary--img {
   position: absolute;
+  margin-right: 5px;
   top: 0;
   left: 0;
   right: 0;
@@ -10675,7 +10676,7 @@ input.quickview__value--number {
 
 @media only screen and (min-width: 768px) {
   .cart__table--body__list {
-    padding: 2rem 2rem 2rem 0;
+    padding: 0.5rem 0.5rem 0.5rem 0;
   }
 }
 

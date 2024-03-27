@@ -25,6 +25,7 @@ class Province(models.Model):
     
 
 # class Address(models.Model):
+#     customer=models.Forginkey(Customer,on_delete=models.CASECADE,related_name='address')
 #     province=models.OneToOneField(Province,on_delete=models.CASCADE)
 #     city=models.CharField(max_length=50)
 #     address=models.CharField(max_length=200)
@@ -45,6 +46,7 @@ class order(models.Model):
         ('posted','Poested')
     ]
     customer=models.ForeignKey(Customer,on_delete=models.CASCADE,related_name='orders',null=True,verbose_name=_('customer :'))
+    phone_number=PhoneNumberField()
     first_name=models.CharField(max_length=30,verbose_name=_('First Name :'))
     last_name=models.CharField(max_length=30,verbose_name=_('Last Name :'))
     

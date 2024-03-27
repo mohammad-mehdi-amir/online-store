@@ -36,7 +36,7 @@ def send_request(request):
 
     data = {
         "MerchantID": settings.MERCHANT,
-        "Amount": rial_total_price,
+        "Amount": toman_total_price,
         "Description": f'#{order_obj.id}: {order_obj.customer.user.first_name} {order_obj.customer.user.last_name}',
         # "Phone": phone,
         "CallbackURL": CallbackURL,

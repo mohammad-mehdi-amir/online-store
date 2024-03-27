@@ -38,35 +38,7 @@
         <div id="ctn-preloader" class="ctn-preloader">
             <div class="animation-preloader">
                 <div class="spinner"></div>
-                <div class="txt-loading">
-                    <span data-text-preloader="L" class="letters-loading">
-                        O
-                    </span>
-
-                    <span data-text-preloader="O" class="letters-loading">
-                        O
-                    </span>
-
-                    <span data-text-preloader="A" class="letters-loading">
-                        A
-                    </span>
-
-                    <span data-text-preloader="D" class="letters-loading">
-                        D
-                    </span>
-
-                    <span data-text-preloader="I" class="letters-loading">
-                        I
-                    </span>
-
-                    <span data-text-preloader="N" class="letters-loading">
-                        N
-                    </span>
-
-                    <span data-text-preloader="G" class="letters-loading">
-                        G
-                    </span>
-                </div>
+                
             </div>
             <div class="loader-section section-left"></div>
             <div class="loader-section section-right"></div>
@@ -76,7 +48,7 @@
 
     <!-- Start header area -->
     <header class="header__section">
-        <div class="header__topbar bg__secondary">
+        <!-- <div class="header__topbar bg__secondary">
             <div class="container-fluid">
                 <div class="header__topbar--inner d-flex align-items-center justify-content-between">
                     <div class="header__shipping">
@@ -136,7 +108,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="main__header header__sticky">
             <div class="container-fluid">
@@ -480,19 +452,17 @@
                             <a class="offcanvas__menu_item" href="{% url 'product_list' %}">Shop</a>
 
                         </li>
-                        <li class="offcanvas__menu_li">
-                            <a class="offcanvas__menu_item" href="#">Categores</a>
-                            <ul class="offcanvas__sub_menu">
+                        
+                          
 
                                 {% for category in Category %}
                                 <li class="offcanvas__sub_menu_li"><a href="{% url 'category_list' category.id %}"
-                                        class="offcanvas__sub_menu_item">{{category.title}}</a></li>
+                                        class="offcanvas__sub_menu_item" style="padding: 20px;">{{category.title}}</a></li>
 
                                 {% endfor %}
 
 
-                            </ul>
-                        </li>
+                           
                         <!-- <li class="offcanvas__menu_li">
                             <a class="offcanvas__menu_item" href="#">Pages</a>
                             <ul class="offcanvas__sub_menu">
@@ -662,8 +632,8 @@
 
                 <div class="minicart__product--items d-flex">
                     <div class="minicart__thumb">
-                        <a href="{% url 'product_detail' item.product_object.id %}"><img
-                                src={{item.product_object.first.image.url}} alt="prduct-img"></a>
+                        <a href="{% url 'product_detail' item.product_object.id %}"><img style="border-radius: 10px; margin-left: 10px;"
+                                src={{item.product_object.image.first.image.url}} alt={{item.product_object.title}}></a>
                     </div>
                     <div class="minicart__text">
                         <h3 class="minicart__subtitle h4"><a

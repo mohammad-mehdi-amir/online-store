@@ -4,5 +4,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class Customuser(AbstractUser):
     
-    phone_number=PhoneNumberField(region='IR',null=True,blank=True)
+    phone_number=PhoneNumberField(region='IR')
+
 
