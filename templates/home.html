@@ -28,15 +28,15 @@ home
         <div class="hero__slider--inner hero__slider--activation swiper">
             <div class="hero__slider--wrapper swiper-wrapper">
 
-                {% for item in Category %}
+                {% for item in slides %}
                 <div class="swiper-slide ">
                     <div class="banner__items">
                         <div class="slider__content">
-                            <a class="banner__items--thumbnail position__relative" href="shop.html"><img
+                            <a class="banner__items--thumbnail position__relative" href="shop.html"><img style="padding: 20px; "
                                     class="banner__items--thumbnail__img"
-                                    src="https://vegasmod.shop/wp-content/uploads/2024/01/IMG_6021_jpg-scaled.jpeg" alt="banner-img">
-                                <div class="banner__items--content">
-                                    <!-- <span class="slider__text--shape__icon">{{item.title}}</span>
+                                    src="{{item.image.url}}" alt="{{item.title}}">
+                                <!-- <div class="banner__items--content">
+                                    <span class="slider__text--shape__icon">{{item.title}}</span>
                                     <h2 class="slider__content--maintitle h1"><b> آدیداس 2020JM </b></h2>
                                     <span class="banner__items--content__link">View Discounts
                                         <svg class="banner__items--content__arrow--icon"
@@ -46,8 +46,8 @@ home
                                                 d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z"
                                                 transform="translate(-4 -4)" fill="currentColor"></path>
                                         </svg>
-                                    </span> -->
-                                </div>
+                                    </span>
+                                </div> -->
                             </a>
                         </div>
                     </div>
@@ -166,7 +166,7 @@ home
                     <div class="banner__items">
                         <a class="banner__items--thumbnail position__relative" href="shop.html"><img
                                 class="banner__items--thumbnail__img"
-                                src="https://risingtheme.com/html/demo-suruchi-v1/suruchi/assets/img/banner/banner1.png"
+                                src="https://vegasmod.shop/wp-content/uploads/2024/03/IMG_5079_jpg-1536x2048.jpeg"
                                 alt="banner-img">
                             <div class="banner__items--content">
                                 <span class="banner__items--content__subtitle">17% Discount</span>
@@ -193,7 +193,7 @@ home
                             <div class="banner__items">
                                 <a class="banner__items--thumbnail position__relative" href="shop.html"><img
                                         class="banner__items--thumbnail__img"
-                                        src="https://risingtheme.com/html/demo-suruchi-v1/suruchi/assets/img/banner/banner3.png"
+                                        src="https://vegasmod.shop/wp-content/uploads/2024/03/IMG_7338-1536x2048.jpeg"
                                         alt="banner-img">
                                     <div class="banner__items--content">
                                         <span class="banner__items--content__subtitle text__secondary">Shop Women</span>
@@ -216,7 +216,7 @@ home
                             <div class="banner__items">
                                 <a class="banner__items--thumbnail position__relative" href="shop.html"><img
                                         class="banner__items--thumbnail__img"
-                                        src="https://risingtheme.com/html/demo-suruchi-v1/suruchi/assets/img/banner/banner2.png"
+                                        src="https://vegasmod.shop/wp-content/uploads/2024/03/IMG_2995_jpg-1536x2048.jpeg"
                                         alt="banner-img">
                                     <div class="banner__items--content">
                                         <span class="banner__items--content__subtitle">Shop Women</span>
@@ -318,7 +318,7 @@ home
 
                                                 {% if product.status == False  %}
                                                 <div class="product__badge">
-                                                    <span class="product__badge--items sale">Sale</span>
+                                                    <span class="product__badge--items sale">ناموجود </span>
                                                 </div>
 
                                                 {% endif %}

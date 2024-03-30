@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-29 06:07+0330\n"
+"PO-Revision-Date: 2024-03-30 01:25+0330\n"
+"Last-Translator: محمد امیر <mm@mm.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Translated-Using: django-rosetta 0.9.9\n"
+
+#: products/models.py:39
+msgid "name :"
+msgstr "نام :"
+
+#: products/models.py:42
+msgid "status"
+msgstr "وضعیت"
+
+#: products/models.py:44
+msgid "category :"
+msgstr "دسته بندی :"
+
+#: products/models.py:46
+msgid "discount"
+msgstr "تخفیف"
+
+#: products/models.py:50
+msgid " add date"
+msgstr "تاریخ ساخت"
+
+#: products/models.py:51
+msgid "edite date"
+msgstr "تاریخ ویرایش"
+
+#: products/models.py:53
+msgid "images :"
+msgstr "تصاویر :"
+
+#: products/models.py:55
+msgid "material :"
+msgstr "جنس :"
+
+#: products/models.py:56
+msgid " decription :"
+msgstr "توضیحات :"
+
+#: products/models.py:67
+msgid " color"
+msgstr "رنگ"
+
+#: products/models.py:97 products/models.py:112
+msgid "product :"
+msgstr "محصول :"
+
+#: products/models.py:98
+msgid "size"
+msgstr "اندازه"
+
+#: products/models.py:99
+msgid "color"
+msgstr "رنگ"
+
+#: products/models.py:101
+msgid "number :"
+msgstr "تعداد : "
+
+#: products/models.py:111
+msgid "customer :"
+msgstr "مشتری :"

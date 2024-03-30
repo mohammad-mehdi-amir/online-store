@@ -9,26 +9,28 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-27 15:23+0330\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2024-03-30 01:22+0330\n"
+"Last-Translator: محمد امیر <mm@mm.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.9.9\n"
+
 #: carts/views.py:48
 msgid " updated successfuly"
-msgstr ""
+msgstr "با موفقیت به روز رسانی شد"
 
 #: carts/views.py:50
 msgid " added to cart successfuly"
-msgstr ""
+msgstr "به سبد خرید اضافه شد"
 
 #: carts/views.py:53
 msgid " does not exist"
-msgstr ""
+msgstr "وجود ندارد"
 
 #: carts/views.py:67
 msgid " remove form cart successfully"
-msgstr ""
+msgstr "از سبد خرید حذف شد"

@@ -35,20 +35,26 @@ def add_to_cart_view(request, product_id):
         form = AddToCartForm(request.POST)
         try:
             if form.is_valid():
-                claened_date = form.cleaned_data
-                quaintity = claened_date['quantity']
-                size1 = claened_date['size']
-                color1 = claened_date['color']
-                add_or_replace = claened_date['inplace']
-                cart.add(Product1, quantites=quaintity, size=size1,
-                        color=color1, add_or_replace=add_or_replace)
-                if add_or_replace == 'on':
-                    messages.success(request, Product1.title + _(' updated successfuly'))
+                if Product1.status == True:
+                    claened_date = form.cleaned_data
+                    quaintity = claened_date['quantity']
+                    size1 = claened_date['size']
+                    color1 = claened_date['color']
+                    add_or_replace = claened_date['inplace']
+                    cart.add(Product1, quantites=quaintity, size=size1,
+                            color=color1, add_or_replace=add_or_replace)
+                    if add_or_replace == 'on':
+                        messages.success(request, Product1.title + _(' updated successfuly'))
+                    else:
+                        messages.success(request, Product1.title + _(' added to cart successfuly'))
+                    return redirect('carts:cart_detail')
                 else:
-                    messages.success(request, Product1.title + _(' added to cart successfuly'))
-                return redirect('carts:cart_detail')
+                    raise Product.DoesNotExist
+        except Product.DoesNotExist:
+            messages.warning(request, Product1.title +'موجودی به اتمام رسیده است')
+            return redirect('product_detail',product_id)
         except Property.DoesNotExist:
-            messages.warning(request, Product1.title + _(' does not exist'))
+            messages.warning(request, Product1.title +f' موجودی در رنگ{color1} و سایز {size1} به اتمام رسیده است')
             return redirect('product_detail',product_id)
             
             

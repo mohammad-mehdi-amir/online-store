@@ -7,8 +7,9 @@ from .models import Province
 from django.contrib import messages
 from django.utils.translation import gettext as _
 from django.contrib.auth.decorators import login_required
-from . models import order
+from . models import order,Shiping_price
 from products.models import Product
+
 @login_required
 def order_create(request):
     cart=Cart(request)
@@ -20,15 +21,15 @@ def order_create(request):
         
         if order_form.is_valid():
             if len(cart)!=0:
+                SHIPING_PRICE=Shiping_price.objects.get().shiping_price
                 
                 
                 order_obj =order_form.save(commit=False)
                 order_obj.customer=request.user.customer
                 order_obj.phone_number=order_form.cleaned_data['phone_number']
-                order_obj.total_price=cart.get_total_price()
+                order_obj.total_price=cart.get_total_price()+SHIPING_PRICE
                 order_obj.save()
                 try:
-
                     for item in cart:
                         
                         order_item.objects.create(
@@ -83,7 +84,7 @@ class OrderListView(generic.ListView):
     template_name='orders/order_list.html'
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context=super().get_context_data(**kwargs)
-        context['orders']=order.objects.prefetch_related('items').filter(customer=self.request.user.customer.id)
+        context['orders']=order.objects.prefetch_related('items').filter(customer=self.request.user.customer.id).order_by('-datetime_order')
         return context
         
     

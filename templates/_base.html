@@ -2,6 +2,7 @@
 {% load custom_mathfilter %}
 {% load persian_number %}
 {% load humanize %}
+{% load price_tags %}
 <!doctype html>
 <html lang="zxx">
 
@@ -38,7 +39,7 @@
         <div id="ctn-preloader" class="ctn-preloader">
             <div class="animation-preloader">
                 <div class="spinner"></div>
-                
+
             </div>
             <div class="loader-section section-left"></div>
             <div class="loader-section section-right"></div>
@@ -120,12 +121,12 @@
                                 <path fill="currentColor" stroke="currentColor" stroke-linecap="round"
                                     stroke-miterlimit="10" stroke-width="32" d="M80 160h352M80 256h352M80 352h352" />
                             </svg>
-                            <span class="visually-hidden">Menu Open</span>
+                            <span class="visually-hidden"></span>
                         </a>
                     </div>
                     <div class="main__logo">
                         <h1 class="main__logo--title"><a class="main__logo--link" href="{% url 'home' %}"><img
-                                    class="main__logo--img" src="assets/img/logo/nav-log.png" alt="torento-shop"></a>
+                                    class="main__logo--img" src="{%  static 'img/logo/toronto.png' %}" height="50" width="200" alt="torento-shop"></a>
                         </h1>
                     </div>
                     <div class="header__search--widget header__sticky--none d-none d-lg-block ">
@@ -134,8 +135,8 @@
 
                             <div class="header__search--box">
                                 <label>
-                                    <input class="header__search--input" name="search_val" placeholder="Keyword here..."
-                                        type="text">
+                                    <input class="header__search--input" style="border-radius: 10px;" name="search_val"
+                                        placeholder="دنبال چی هستی؟..." type="text">
                                 </label>
                                 <button class="header__search--button bg__secondary text-white" type="submit"
                                     aria-label="search button">
@@ -154,7 +155,7 @@
                     <div class="header__account header__sticky--none">
                         <ul class="d-flex">
                             <li class="header__account--items">
-                                <a class="header__account--btn" href="{% url 'profile' %}">
+                                <a class="offcanvas__stikcy--toolbar__btn " href="{% url 'profile' %}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="26.51" height="23.443"
                                         viewBox="0 0 512 512">
                                         <path
@@ -166,7 +167,7 @@
                                             fill="none" stroke="currentColor" stroke-miterlimit="10"
                                             stroke-width="32" />
                                     </svg>
-                                    <span class="header__account--btn__text">My Account</span>
+                                    <span class="header__account--btn__text">حساب کاربری</span>
                                 </a>
                             </li>
                             <li class="header__account--items d-none d-lg-block">
@@ -178,12 +179,12 @@
                                             fill="none" stroke="currentColor" stroke-linecap="round"
                                             stroke-linejoin="round" stroke-width="32"></path>
                                     </svg>
-                                    <span class="header__account--btn__text"> Wish List</span>
+                                    <span class="header__account--btn__text">مورد علاقه ها</span>
                                     <span class="items__count wishlist">{{user.customer.wishlists.all|length}}</span>
                                 </a>
                             </li>
                             <li class="header__account--items">
-                                <a class="header__account--btn minicart__open--btn" href="javascript:void(0)"
+                                <a class="offcanvas__stikcy--toolbar__btn minicart__open--btn" href="javascript:void(0)"
                                     data-offcanvas>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="26.51" height="23.443"
                                         viewBox="0 0 14.706 13.534">
@@ -201,7 +202,7 @@
                                             </g>
                                         </g>
                                     </svg>
-                                    <span class="header__account--btn__text"> My cart</span>
+                                    <span class="header__account--btn__text">سبد خرید</span>
                                     <span class="items__count">{{cart|length}}</span>
                                 </a>
                             </li>
@@ -211,19 +212,19 @@
                         <nav class="header__menu--navigation">
                             <ul class="d-flex">
                                 <li class="header__menu--items">
-                                    <a class="header__menu--link" href="{% url 'home' %}">Home
+                                    <a class="header__menu--link" style="color:  var(--primary-color);" href="{% url 'home' %}">صفحه اصلی
 
                                     </a>
 
                                 </li>
                                 <li class="header__menu--items mega__menu--items">
-                                    <a class="header__menu--link" href="{% url 'product_list' %}">Shop
+                                    <a class="header__menu--link"  style="color:  var(--primary-color);" href="{% url 'product_list' %}">فروشگاه
 
                                     </a>
 
 
                                 <li class="header__menu--items d-none d-xl-block">
-                                    <a class="header__menu--link" href="shop.html">Categories </a>
+                                    <a class="header__menu--link"  style="color:  var(--primary-color);" href="#">دسته بندی ها </a>
                                     <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
                                         height="7.41" viewBox="0 0 12 7.41">
                                         <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
@@ -239,43 +240,28 @@
                                                 {{category.title}}
                                             </a></li>
                                         {% endfor %}
+                                        <!-- {% for item in Category %}
 
+                                        <li class="widget__categories--menu__list">
+                                            <label class="widget__categories--menu__label d-flex align-items-center"
+                                                alt="categories-img">
+                                                <spanclass="widget__categories--menu__text">{{item.title}}</span>
+
+                                            </label>
+
+                                        </li>
+
+                                        {% endfor %} -->
 
                                     </ul>
 
                                 </li>
+
                                 <li class="header__menu--items">
-                                    <a class="header__menu--link" href="#">Pages
-                                        <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
-                                            height="7.41" viewBox="0 0 12 7.41">
-                                            <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                                transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
-                                        </svg>
-                                    </a>
-                                    <ul class="header__sub--menu">
-                                        <li class="header__sub--menu__items"><a href="about.html"
-                                                class="header__sub--menu__link">About Us</a></li>
-                                        <li class="header__sub--menu__items"><a href="contact.html"
-                                                class="header__sub--menu__link">Contact Us</a></li>
-                                        <li class="header__sub--menu__items"><a href="cart.html"
-                                                class="header__sub--menu__link">Cart Page</a></li>
-                                        <li class="header__sub--menu__items"><a href="portfolio.html"
-                                                class="header__sub--menu__link">Portfolio Page</a></li>
-                                        <li class="header__sub--menu__items"><a href="{% url 'wishlist' %}"
-                                                class="header__sub--menu__link">Wishlist Page</a></li>
-                                        <li class="header__sub--menu__items"><a href="login.html"
-                                                class="header__sub--menu__link">Login Page</a></li>
-                                        <li class="header__sub--menu__items"><a href="404.html"
-                                                class="header__sub--menu__link">Error Page</a></li>
-                                    </ul>
+                                    <a class="header__menu--link"  style="color:  var(--primary-color);" href="contact.ht">&nbsp;&nbsp;&nbsp; ارتباط با فروشگاه</a>
                                 </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link" href="contact.html">Contact </a>
-                                </li>
-                                </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link" href="about.html">About US </a>
-                                </li>
+                                
+
                             </ul>
                         </nav>
                     </div>
@@ -283,7 +269,7 @@
                         <ul class="d-flex">
                             <li
                                 class="header__account--items header__account2--items  header__account--search__items d-none d-lg-block">
-                                <a class="header__account--btn search__open--btn" href="javascript:void(0)"
+                                <a class="header__account--btn search__open--btn" style="color:  var(--primary-color);" href="javascript:void(0)"
                                     data-offcanvas>
                                     <svg class="header__search--button__svg" xmlns="http://www.w3.org/2000/svg"
                                         width="26.51" height="23.443" viewBox="0 0 512 512">
@@ -293,11 +279,11 @@
                                         <path fill="none" stroke="currentColor" stroke-linecap="round"
                                             stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448" />
                                     </svg>
-                                    <span class="visually-hidden">Search</span>
+                                    <span class="visually-hidden">جستجو</span>
                                 </a>
                             </li>
                             <li class="header__account--items header__account2--items">
-                                <a class="header__account--btn" href="{% url 'profile' %}">
+                                <a class="offcanvas__stikcy--toolbar__btn " href="{% url 'profile' %}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="26.51" height="23.443"
                                         viewBox="0 0 512 512">
                                         <path
@@ -309,7 +295,7 @@
                                             fill="none" stroke="currentColor" stroke-miterlimit="10"
                                             stroke-width="32" />
                                     </svg>
-                                    <span class="visually-hidden">My Account</span>
+                                    <span class="visually-hidden">حساب کاربری</span>
                                 </a>
                             </li>
                             <li class="header__account--items header__account2--items d-none d-lg-block">
@@ -325,7 +311,7 @@
                                 </a>
                             </li>
                             <li class="header__account--items header__account2--items">
-                                <a class="header__account--btn minicart__open--btn" href="javascript:void(0)"
+                                <a class="offcanvas__stikcy--toolbar__btn minicart__open--btn" href="javascript:void(0)"
                                     data-offcanvas>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="26.51" height="23.443"
                                         viewBox="0 0 14.706 13.534">
@@ -360,19 +346,19 @@
                         <nav class="header__menu--navigation">
                             <ul class="d-flex">
                                 <li class="header__menu--items">
-                                    <a class="header__menu--link" href="{% url 'home' %}">Home
+                                    <a class="header__menu--link" href="{% url 'home' %}">صفحه اصلی
 
                                     </a>
 
                                 </li>
                                 <li class="header__menu--items mega__menu--items">
-                                    <a class="header__menu--link" href="{% url 'product_list' %}">Shop
+                                    <a class="header__menu--link" href="{% url 'product_list' %}">فروشگاه
 
                                     </a>
 
 
                                 <li class="header__menu--items d-none d-xl-block">
-                                    <a class="header__menu--link" href="shop.html">Categories </a>
+                                    <a class="header__menu--link" href="shop.html">دسته بندی ها </a>
                                     <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
                                         height="7.41" viewBox="0 0 12 7.41">
                                         <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
@@ -388,46 +374,23 @@
                                         {% endfor %}
 
 
+
                                     </ul>
 
                                 </li>
+
                                 <li class="header__menu--items">
-                                    <a class="header__menu--link" href="#">Pages
-                                        <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
-                                            height="7.41" viewBox="0 0 12 7.41">
-                                            <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                                transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
-                                        </svg>
-                                    </a>
-                                    <ul class="header__sub--menu">
-                                        <li class="header__sub--menu__items"><a href="about.html"
-                                                class="header__sub--menu__link">About Us</a></li>
-                                        <li class="header__sub--menu__items"><a href="contact.html"
-                                                class="header__sub--menu__link">Contact Us</a></li>
-                                        <li class="header__sub--menu__items"><a href="cart.html"
-                                                class="header__sub--menu__link">Cart Page</a></li>
-                                        <li class="header__sub--menu__items"><a href="portfolio.html"
-                                                class="header__sub--menu__link">Portfolio Page</a></li>
-                                        <li class="header__sub--menu__items"><a href="{% url 'wishlist' %}"
-                                                class="header__sub--menu__link">Wishlist Page</a></li>
-                                        <li class="header__sub--menu__items"><a href="login.html"
-                                                class="header__sub--menu__link">Login Page</a></li>
-                                        <li class="header__sub--menu__items"><a href="404.html"
-                                                class="header__sub--menu__link">Error Page</a></li>
-                                    </ul>
-                                </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link" href="contact.html">Contact </a>
+                                    <a class="header__menu--link" href="contact.html">ارتباط با ما </a>
                                 </li>
                                 </li>
                                 <li class="header__menu--items">
-                                    <a class="header__menu--link" href="about.html">About US </a>
+                                    <a class="header__menu--link" href="about.html">درباره ما </a>
                                 </li>
                             </ul>
                         </nav>
                     </div>
                     <p class="header__discount--text"><img class="header__discount--icon__img"
-                            src="{% static 'img/icon/lamp.png' %} " alt="lamp-img"> Special up to 60% Off all item</p>
+                            src="{% static 'img/icon/lamp.png' %} " alt="lamp-img"> تخفیف تا سقف ۶۰ ٪</p>
                 </div>
             </div>
         </div>
@@ -440,29 +403,29 @@
                     <a class="offcanvas__logo_link" href="index.html">
                         <img src="assets/img/logo/nav-log.png" alt="Grocee Logo" width="158" height="36">
                     </a>
-                    <button class="offcanvas__close--btn" data-offcanvas>close</button>
+                    <button class="offcanvas__close--btn" data-offcanvas>بستن</button>
                 </div>
                 <nav class="offcanvas__menu">
                     <ul class="offcanvas__menu_ul">
                         <li class="offcanvas__menu_li">
-                            <a class="offcanvas__menu_item" href="{% url 'home' %}">Home</a>
+                            <a class="offcanvas__menu_item" href="{% url 'home' %}">صفحه اصلی</a>
 
                         </li>
                         <li class="offcanvas__menu_li">
-                            <a class="offcanvas__menu_item" href="{% url 'product_list' %}">Shop</a>
+                            <a class="offcanvas__menu_item" href="{% url 'product_list' %}">فروشگاه</a>
 
                         </li>
-                        
-                          
-
-                                {% for category in Category %}
-                                <li class="offcanvas__sub_menu_li"><a href="{% url 'category_list' category.id %}"
-                                        class="offcanvas__sub_menu_item" style="padding: 20px;">{{category.title}}</a></li>
-
-                                {% endfor %}
 
 
-                           
+
+                        {% for category in Category %}
+                        <li class="offcanvas__sub_menu_li"><a href="{% url 'category_list' category.id %}"
+                                class="offcanvas__sub_menu_item" style="padding: 20px;">{{category.title}}</a></li>
+
+                        {% endfor %}
+
+
+
                         <!-- <li class="offcanvas__menu_li">
                             <a class="offcanvas__menu_item" href="#">Pages</a>
                             <ul class="offcanvas__sub_menu">
@@ -482,8 +445,10 @@
                                         class="offcanvas__sub_menu_item">Error Page</a></li>
                             </ul>
                         </li> -->
-                        <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="about.html">About</a></li>
-                        <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="contact.html">Contact</a>
+                        <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="about.html">درباره ما</a>
+                        </li>
+                        <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="contact.html">ارتباط با
+                                ما</a>
                         </li>
                     </ul>
                     <div class="offcanvas__account--items">
@@ -503,7 +468,7 @@
                                         fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
                                 </svg>
                             </span>
-                            <span class="offcanvas__account--items__label" style="margin: 5px;"> Logout </span>
+                            <span class="offcanvas__account--items__label" style="margin: 5px;"> خروج </span>
                         </a>
 
                         {% else %}
@@ -522,7 +487,7 @@
                                         fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
                                 </svg>
                             </span>
-                            <span class="offcanvas__account--items__label">Login / Register</span>
+                            <span class="offcanvas__account--items__label">ورود / ثبت نام</span>
                         </a>
                         {% endif %}
 
@@ -546,7 +511,7 @@
                                 </path>
                             </svg>
                         </span>
-                        <span class="offcanvas__stikcy--toolbar__label">Home</span>
+                        <span class="offcanvas__stikcy--toolbar__label">صفحه اصلی</span>
                     </a>
                 </li>
                 <li class="offcanvas__stikcy--toolbar__list">
@@ -559,7 +524,7 @@
                                 </path>
                             </svg>
                         </span>
-                        <span class="offcanvas__stikcy--toolbar__label">Shop</span>
+                        <span class="offcanvas__stikcy--toolbar__label">فروشگاه</span>
                     </a>
                 </li>
                 <li class="offcanvas__stikcy--toolbar__list ">
@@ -573,7 +538,7 @@
                                     stroke-width="32" d="M338.29 338.29L448 448" />
                             </svg>
                         </span>
-                        <span class="offcanvas__stikcy--toolbar__label">Search</span>
+                        <span class="offcanvas__stikcy--toolbar__label">جستجو</span>
                     </a>
                 </li>
                 <li class="offcanvas__stikcy--toolbar__list">
@@ -587,7 +552,7 @@
                                     transform="translate(-62.393 -135.3)" fill="currentColor" />
                             </svg>
                         </span>
-                        <span class="offcanvas__stikcy--toolbar__label">Cart</span>
+                        <span class="offcanvas__stikcy--toolbar__label">سبد خرید</span>
                         <span class="items__count">{{cart|length}}</span>
                     </a>
                 </li>
@@ -601,8 +566,8 @@
                                     transform="translate(-62.498 -132.915)" fill="currentColor" />
                             </svg>
                         </span>
-                        <span class="offcanvas__stikcy--toolbar__label">Wishlist</span>
-                        <span class="items__count">3</span>
+                        <span class="offcanvas__stikcy--toolbar__label">مورد علاقه</span>
+                        <span class="items__count">{{user.customer.wishlists.all|length}}</span>
                     </a>
                 </li>
             </ul>
@@ -613,7 +578,7 @@
         <div class="offCanvas__minicart">
             <div class="minicart__header ">
                 <div class="minicart__header--top d-flex justify-content-between align-items-center">
-                    <h2 class="minicart__title h3"> Shopping Cart</h2>
+                    <h2 class="minicart__title h3"> سبد خرید</h2>
                     <button class="minicart__close--btn" aria-label="minicart close button" data-offcanvas>
                         <svg class="minicart__close--icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                             <path fill="currentColor" stroke="currentColor" stroke-linecap="round"
@@ -621,7 +586,7 @@
                         </svg>
                     </button>
                 </div>
-                <p class="minicart__header--desc">Clothing and fashion products are limited</p>
+
             </div>
 
             {% if cart %}
@@ -631,53 +596,48 @@
                 {% for item in cart %}
 
                 <div class="minicart__product--items d-flex">
-                    <div class="minicart__thumb">
-                        <a href="{% url 'product_detail' item.product_object.id %}"><img style="border-radius: 10px; margin-left: 10px;"
+                    <div class="minicart__thumb" style="margin-left: 10px;">
+                        <a href="{% url 'product_detail' item.product_object.id %}"><img
+                                style="border-radius: 10px; margin-left: 10px;"
                                 src={{item.product_object.image.first.image.url}} alt={{item.product_object.title}}></a>
                     </div>
                     <div class="minicart__text">
                         <h3 class="minicart__subtitle h4"><a
                                 href="{% url 'product_detail' item.product_object.id %}">{{item.product_object.title}}</a>
                         </h3>
-                        <span class="color__variant"><b>Color:</b>{{item.color}}</span>
-                        <span class="color__variant"><b>Size:</b>{{item.size}}</span>
+                        <span class="color__variant"><b>رنگ:</b>{{item.color}}</span>
+                        <span class="color__variant"><b>سایز:</b>{{item.size}}</span>
+                        <span class="color__variant"><b>تعداد:</b>{{item.quantity}}</span>
                         <div class="minicart__price">
                             {% if item.product_object.discount or item.product_object.category.discount %}
                             {% if item.product_object.category.discount %}
 
-                            <span class="old__price">{{item.product_object.price}}</span>
+                            <span class="old__price">{{item.product_object.price}} تومان</span>
                             <span class="price__divided"></span>
                             <span
-                                class="current__price">{{ item.product_object.price|custom_add:item.product_object.category.discount.discount }}</span>
+                                class="current__price">{{ item.product_object.price|custom_add:item.product_object.category.discount.discount }}
+                                تومان</span>
 
 
                             {% else %}
-                            <span class="old__price">{{item.product_object.price}}</span>
+                            <span class="old__price">{{item.product_object.price}} تومان</span>
                             <span class="price__divided"></span>
                             <span
-                                class="current__price">{{item.product_object.price|custom_add:item.product_object.discount.discount }}</span>
+                                class="current__price">{{item.product_object.price|custom_add:item.product_object.discount.discount }}
+                                تومان</span>
 
                             {% endif %}
                             {% else %}
 
-                            <span class="current__price">{{item.product_object.price}}</span>
+                            <span class="current__price">{{item.product_object.price}} تومان</span>
 
 
                             {% endif %}
 
                         </div>
                         <div class="minicart__text--footer d-flex align-items-center">
-                            <div class="quantity__box minicart__quantity">
-                                <button type="button" class="quantity__value increase" value="Increase Value">+</button>
-                                <label>
-                                    <input type="number" class="quantity__number" value={{item.quantity}}
-                                        data-counter />
-                                </label>
-                                <button type="button" class="quantity__value decrease" aria-label="quantity value"
-                                    value="Decrease Value">-</button>
-                            </div>
                             <a class="minicart__product--remove " style="padding: 5px;"
-                                href="{% url 'carts:cart_remove' product=item.product_object.id color=item.color size=item.size  %}">Remove</a>
+                                href="{% url 'carts:cart_remove' product=item.product_object.id color=item.color size=item.size  %}">حذف</a>
                         </div>
                     </div>
                 </div>
@@ -687,29 +647,26 @@
             </div>
             <div class="minicart__amount">
                 <div class="minicart__amount_list d-flex justify-content-between">
-                    <span>Sub Total:</span>
-                    <span><b>$240.00</b></span>
+                    <span>قیمت جز :</span>
+                    <span><b>{{cart.get_total_price|intcomma:False|to_persian}} تومان</b></span>
                 </div>
                 <div class="minicart__amount_list d-flex justify-content-between">
-                    <span>Total:</span>
-                    <span><b>$240.00</b></span>
+                    <span>قیمت کل : (با هزینه ارسال)</span>
+                    <span><b>{{cart.get_total_price |apply_shiping_price|intcomma:False|to_persian}} تومان</b></span>
                 </div>
             </div>
-            <div class="minicart__conditions text-center">
-                <input class="minicart__conditions--input" id="accept" type="checkbox">
-                <label class="minicart__conditions--label" for="accept">I agree with the <a
-                        class="minicart__conditions--link" href="privacy-policy.html">Privacy and Policy</a></label>
-            </div>
-            <div class="minicart__button d-flex justify-content-center">
-                <a class="primary__btn minicart__button--link" href="{% url 'carts:cart_detail' %}">View cart</a>
-                <a class="primary__btn minicart__button--link" href="{% url 'order_create' %}">Checkout</a>
+
+            <div class="minicart__button ">
+                <a class="primary__btn minicart__button--link" href="{% url 'carts:cart_detail' %}"
+                    style="margin:12px;">دیدن سبد خرید</a>
+                <a class="primary__btn minicart__button--link" href="{% url 'order_create' %}">پرداخت</a>
             </div>
 
             {% else %}
             <div class="minicart__amount">
-                <h2>cart is empty</h2>
+                <h2>سبد خرید خالی است</h2>
                 <a href="{% url 'product_list' %}">
-                    <p>view products</p>
+                    <p>مرور محصولات</p>
                 </a>
             </div>
             {% endif %}
@@ -720,7 +677,7 @@
         <!-- Start serch box area -->
         <div class="predictive__search--box ">
             <div class="predictive__search--box__inner">
-                <h2 class="predictive__search--title">Search Products</h2>
+                <h2 class="predictive__search--title">جستجو در محصولات</h2>
                 <form class="predictive__search--form" action="{% url 'search' %}" method="post">
                     {% csrf_token %}
                     <label>
@@ -817,8 +774,8 @@
                             alt="">
                     </div>
                     <div class="shipping__items2--content">
-                        <h2 class="shipping__items2--content__title h3">Shipping</h2>
-                        <p class="shipping__items2--content__desc">From handpicked sellers</p>
+                        <h2 class="shipping__items2--content__title h3">ارسال سریع</h2>
+                        <p class="shipping__items2--content__desc">از فروشگاه</p>
                     </div>
                 </div>
                 <div class="shipping__items2 d-flex align-items-center">
@@ -827,7 +784,7 @@
                             alt="">
                     </div>
                     <div class="shipping__items2--content">
-                        <h2 class="shipping__items2--content__title h3">Payment</h2>
+                        <h2 class="shipping__items2--content__title h3">پرداخت ایمن</h2>
                         <p class="shipping__items2--content__desc">From handpicked sellers</p>
                     </div>
                 </div>
@@ -837,7 +794,7 @@
                             alt="">
                     </div>
                     <div class="shipping__items2--content">
-                        <h2 class="shipping__items2--content__title h3">Return</h2>
+                        <h2 class="shipping__items2--content__title h3">ضمانت مرجوعی</h2>
                         <p class="shipping__items2--content__desc">From handpicked sellers</p>
                     </div>
                 </div>
@@ -847,7 +804,7 @@
                             alt="">
                     </div>
                     <div class="shipping__items2--content">
-                        <h2 class="shipping__items2--content__title h3">Support</h2>
+                        <h2 class="shipping__items2--content__title h3">پشنیبانی</h2>
                         <p class="shipping__items2--content__desc">From handpicked sellers</p>
                     </div>
                 </div>
@@ -862,7 +819,7 @@
         <div class="container-fluid">
             <div class="main__footer d-flex justify-content-between">
                 <div class="footer__widget footer__widget--width">
-                    <h2 class="footer__widget--title text-ofwhite h3">About Us
+                    <h2 class="footer__widget--title text-ofwhite h3">درباره ما
                         <button class="footer__widget--button" aria-label="footer widget button">
                             <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
                                 width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
@@ -872,11 +829,26 @@
                         </button>
                     </h2>
                     <div class="footer__widget--inner">
-                        <p class="footer__widget--desc text-ofwhite mb-20">Lorem ipsum dolor sit amet, consectetur
-                            adipisici ti elit <br> seddo eiusmod tempor incididunt utlabore et dolore <br> magna aliqua
-                            enim ad minim veniam quisnostrud <br> exercitation ullamco</p>
+                        <p class="footer__widget--desc text-ofwhite mb-20">آدرس فروشگاه :
+                            <br>j
+                            پاکدشت مامازند خیابان ولیعصر خیابان علامه پلاک 31
+                            <br>
+                            ساعات اداری پشتیبانی سایت (به جز جمعه و تعطیلات رسمی) :
+                            شنبه تا چهارشنبه
+                            از ساعت 11:00 الی 20:00
+                            <br>
+                            ساعت کاری فروشگاه (به جز روزهای تعطیل)
+                            پنج شنبه 10:00 الی 22:00
+                            <br>
+                            شماره سفارش و پشتیبانی :
+                            <br>
+                            0905-2211303
+                            <br>
+                            0905-2211606
+                            <br>
+                            0905-2211909/p>
                         <div class="footer__social">
-                            <h3 class="social__title text-ofwhite h4 mb-15">Follow Us</h3>
+                            <h3 class="social__title text-ofwhite h4 mb-15">مارا دنبال کنید</h3>
                             <ul class="social__shear d-flex">
                                 <li class="social__shear--list">
                                     <a class="social__shear--list__icon" target="_blank"

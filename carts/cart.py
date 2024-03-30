@@ -111,6 +111,15 @@ class Cart:
                     float(pro.price)-float(pro.price)*pro.discount.discount)
             else:
                 product_price = pro.price
+            if pro.propertes.get(color= cart[item]['color'],size= cart[item]['size']).number < cart[item]['quantity']:
+                cart[item]['quantity']=1
+
+                
+            if pro.propertes.get(color= cart[item]['color'],size= cart[item]['size']).number ==0:
+                self.remove(pro.id,cart[item]['color'],cart[item]['size'])
+                
+
+                
                 
             cart[item]['total_price'] = (cart[item]['quantity'])*product_price
             cart[item]['product_object'] = pro

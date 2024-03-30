@@ -99,7 +99,7 @@ def verify(request):
 
             if response['Status'] == 100:
                 order_obj.zarinpal_authority = authority
-                order_obj.peyment_status='peyed'
+                order_obj.peyment_status='پرداخت شده'
                 order_obj.save()
                 
                 cart=Cart(request)
@@ -112,7 +112,7 @@ def verify(request):
                 messages.success(request,'پرداخت شما با موفقیت به پایان رسید و سفارش شما ثبت گردید')
                 return redirect('order_list')
             elif response['Status'] == 100:
-                messages.warning(request,'این سفارش قبلا پرداخت و ثبت گردیده است٬ میتوانید آنرا در داشبور خود مشاهده کنید')
+                messages.warning(request,'این سفارش قبلا پرداخت و ثبت گردیده است٬ میتوانید آنرا در داشبورد خود مشاهده کنید')
                 return redirect('order_list')
             else:
                 messages.warning(request,f'پرداخت با موفقت انجام نشد کد {response["Status"]}')
@@ -131,6 +131,7 @@ def verify(request):
         order_obj.save()
         return render(request,'404.html',{"title":'گذر از زمان مجاز'})
     except Exception as e:
+        print(e,',===============')
         messages.warning(request,'خطای برقرای ارتباط')
         order_obj.peyment_status='cancel'
         order_obj.save()

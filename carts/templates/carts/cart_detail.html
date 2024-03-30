@@ -1,6 +1,6 @@
 {% extends '_base.html' %}
 {% load custom_mathfilter %}
-
+{% load solo_tags %}
 {% load humanize %}
 {% load persian_number %}
 
@@ -14,22 +14,23 @@
 
 
 <!-- Start breadcrumb section -->
-<section class="breadcrumb__section breadcrumb__bg">
+<!-- <section class="breadcrumb__section breadcrumb__bg">
     <div class="container">
         <div class="row row-cols-1">
             <div class="col">
                 <div class="breadcrumb__content text-center">
-                    <h1 class="breadcrumb__content--title text-white mb-25">Shopping Cart</h1>
+                    <h1 class="breadcrumb__content--title text-white mb-25">سبد خرید</h1>
                     <ul class="breadcrumb__content--menu d-flex justify-content-center">
-                        <li class="breadcrumb__content--menu__items"><a class="text-white" href="index.html">Home</a>
+                        <li class="breadcrumb__content--menu__items"><a class="text-white" href="{% url 'home' %}">صفحه اصلی</a>
                         </li>
-                        <li class="breadcrumb__content--menu__items"><span class="text-white">Shopping Cart</span></li>
+                        &nbsp;/&nbsp;
+                        <li class="breadcrumb__content--menu__items"><span class="text-white">سبد خرید</span></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <!-- End breadcrumb section -->
 
 <!-- cart section start -->
@@ -46,10 +47,10 @@
                         <table class="cart__table--inner">
                             <thead class="cart__table--header">
                                 <tr class="cart__table--header__items">
-                                    <th class="cart__table--header__list">Product</th>
-                                    <th class="cart__table--header__list">Price</th>
-                                    <th class="cart__table--header__list">Quantity</th>
-                                    <th class="cart__table--header__list">Total</th>
+                                    <th class="cart__table--header__list">نام محصول</th>
+                                    <th class="cart__table--header__list">قیمت</th>
+                                    <th class="cart__table--header__list">تعداد</th>
+                                    <th class="cart__table--header__list">قیمت کل</th>
                                 </tr>
                             </thead>
                             <tbody class="cart__table--body">
@@ -130,9 +131,9 @@
                                     <td class="cart__table--body__list">
                                         <!-- <span class="cart__price end">{{orderitem.total_price}} aaaتومان</span> -->
 
-                                        <span class="cart__price end"  style="right: 90px;">جمع جزء </span>
+                                        <!-- <span class="cart__price end"  style="right: 90px;">جمع جزء </span> -->
                                         <span class="cart__price end"
-                                            style="position: absolute; left: 90px;"> {{orderitem.total_price}} تومان</span>
+                                            > {{orderitem.total_price}} تومان</span>
                                     </td>
 
                                 </tr>
@@ -195,7 +196,8 @@
                             <p class="cart__summary--footer__desc">
 
                                 هزینه بسته بندی و پست (15 تومان بسته بندی و 30 تومان پست) بارکد پستی در پیج استوری
-                                میشود: 45,000تومان
+                                میشود:{% get_solo 'orders.Shiping_price' as shiping_price %}
+                                {{ shiping_price.shiping_price|intcomma:False }}تومان
                             </p>
                             <form action="{% url 'order_create' %}" method="post">
                                 <ul class="d-flex justify-content-between">

@@ -3,7 +3,7 @@
 {% load mathfilters %}
 {% load price_tags %}
 {% load persian_number %}
-
+{% load solo_tags %}
 {% load custom_mathfilter %}
 {% load humanize %}
 {% block content %}
@@ -93,19 +93,20 @@
                                 <table class="checkout__total--table">
                                     <tbody class="checkout__total--body">
                                         <tr class="checkout__total--items">
-                                            <td class="checkout__total--title text-left">Subtotal </td>
+                                            <td class="checkout__total--title text-left">قیمت جز </td>
                                             <td class="checkout__total--amount text-right" style="position: absolute ;left: 40px;">{{cart.get_total_price|intcomma:False|to_persian}}</td>
                                         </tr>
                                         <tr class="checkout__total--items">
-                                            <td class="checkout__total--title text-left">Shipping</td>
-                                            <td class="checkout__total--calculated__text text-right" style="position: absolute ;left: 40px;">45,000 تومان هزینه ارسال</td>
+                                            <td class="checkout__total--title text-left">هزینه ارسال</td>
+                                            <td class="checkout__total--calculated__text text-right" style="position: absolute ;left: 40px;">{% get_solo 'orders.Shiping_price' as shiping_price %}
+                                                {{ shiping_price.shiping_price|intcomma:False }} تومان</td>
                                         </tr>
                                     </tbody>
                                     <tfoot class="checkout__total--footer">
                                         <tr class="checkout__total--footer__items">
                                             <td
                                                 class="checkout__total--footer__title checkout__total--footer__list text-left">
-                                                Total </td>
+                                            </td>
                                             <td
                                                 class="checkout__total--footer__amount checkout__total--footer__list text-right">
                                                 {{cart.get_total_price |apply_shiping_price|intcomma:False|to_persian}} تومان</td>
@@ -117,13 +118,13 @@
                     </details>
                     
                 </header>
-                <main class="main__content_wrapper">
+                <main class="main__content_wrapper" style="border-top: 1px solid rgba(128, 128, 128, 0.523); padding-top: 10px;">
                     <form action="{% url 'order_create' %}" method="post">
                         {% csrf_token %}
                         <div class="checkout__content--step section__contact--information">
                             <div
                                 class="section__header checkout__section--header d-flex align-items-center justify-content-between mb-25">
-                                <h2 class="section__header--title h3" style="font-size: x-large;"> <b>اطلاعات سبد خرید</b></h2>
+                                <h2 class="section__header--title h3" style="font-size: x-large; color: var(--secondary-color);"> <b>اطلاعات سبد خرید</b></h2>
 
                             </div>
                             <div class="customer__information">
@@ -141,9 +142,9 @@
 
                             </div>
                         </div>
-                        <div class="checkout__content--step section__shipping--address">
+                        <div class="checkout__content--step section__shipping--address" >
                             <div class="section__header mb-25">
-                                <h3 class="section__header--title">آدرس پستی</h3>
+                                <h3 class="section__header--title" style=" color: var(--secondary-color);">اطلاعات ارسال</h3>
                             </div>
                             <div class="section__shipping--address__content">
                                 <div class="row">
@@ -151,7 +152,7 @@
                                         <div class="checkout__input--list ">
                                             <label>
                                                 <input class="checkout__input--field border-radius-5"
-                                                    placeholder="First name (optional)" type="text" name="first_name"
+                                                    placeholder="نام" type="text" name="first_name"
                                                     value={{customer.user.first_name}}>
                                             </label>
                                         </div>
@@ -164,7 +165,7 @@
                                         <div class="checkout__input--list">
                                             <label>
                                                 <input class="checkout__input--field border-radius-5"
-                                                    placeholder="Last name" type="text" name="last_name"
+                                                    placeholder="نام خانوادگی" type="text" name="last_name"
                                                     value={{customer.user.last_name}}>
                                             </label>
                                         </div>
@@ -175,13 +176,12 @@
                                     </div>
                                     <div class="col-lg-6 mb-12">
                                         <div class="checkout__input--list checkout__input--select select">
-                                            <label class="checkout__select--label" for="country">province</label>
+                                    
                                             <select class="checkout__input--select__field border-radius-5"
                                                 name="province">
-                                                <option disabled selected >یک گزیه را انتخاب کنید</option>
                                                 {% for pro in province %}
 
-                                                <option value={{pro.id}}>{{pro.name}}</option>
+                                                <option selected value={{pro.id}}>{{pro.name}}</option>
 
                                                 {% endfor %}
 
@@ -195,7 +195,7 @@
                                     <div class="col-lg-6 mb-12">
                                         <div class="checkout__input--list">
                                             <label>
-                                                <input class="checkout__input--field border-radius-5" placeholder="city"
+                                                <input class="checkout__input--field border-radius-5" placeholder="شهر"
                                                     type="text" name="city" value={{order_info.city}}>
                                             </label>
                                         </div>
@@ -208,7 +208,7 @@
                                         <div class="checkout__input--list">
                                             <label>
                                                 <input class="checkout__input--field border-radius-5"
-                                                    placeholder="street,p,..." type="text" name="address" value={{order_info.address}}>
+                                                    placeholder="محله٫خیابان٫پلاک..." type="text" name="address" value={{order_info.address}}>
                                             </label>
                                         </div>
                                         {% if form.address.errors %}
@@ -221,7 +221,7 @@
                                         <div class="checkout__input--list">
                                             <label>
                                                 <input class="checkout__input--field border-radius-5" name="postal_code"
-                                                    placeholder="postal code" type="number" value={{order_info.posatl_code}}>
+                                                    placeholder="کد پستی" type="number" value={{order_info.posatl_code}}>
                                             </label>
                                         </div>
                                         {% if form.postal_code.errors %}
@@ -234,7 +234,7 @@
                                         <div class="checkout__input--list">
                                             <label>
                                                 <input class="checkout__input--field border-radius-5" name="order_note"
-                                                    placeholder="any note for orders" type="texteria">
+                                                    placeholder="اگر یادداشتی برای سفارش دارید اینجا بنویسید" type="texteria">
                                             </label>
                                         </div>
                                         {% if form.order_note.errors %}
@@ -247,9 +247,8 @@
                             </div>
                         </div>
                         <div class="checkout__content--step__footer d-flex align-items-center">
-                            <button class="continue__shipping--btn primary__btn border-radius-5" type="submit">Continue
-                                To Shipping</button>
-                            <a class="previous__link--content" href="{% url 'carts:cart_detail' %}">Return to cart</a>
+                            <button class="continue__shipping--btn primary__btn border-radius-5" type="submit" style="margin-left: 5px;">پرداخت</button>
+                            <a class="previous__link--content" href="{% url 'carts:cart_detail' %}" style="left: 10px;">بازگشت سبد خرید</a>
                         </div>
                     </form>
                 </main>

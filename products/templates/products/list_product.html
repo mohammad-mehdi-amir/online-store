@@ -18,7 +18,7 @@
     </button>
     <div class="offcanvas__filter--sidebar__inner">
         <div class="single__widget widget__bg">
-            <h2 class="widget__title h3">Categories</h2>
+            <h2 class="widget__title h3">دسته بندی ها</h2>
             <ul class="widget__categories--menu">
 
                 {% for item in Category %}
@@ -62,22 +62,22 @@
 
 
 <!-- Start breadcrumb section -->
-<section class="breadcrumb__section breadcrumb__bg">
+<!-- <section class="breadcrumb__section breadcrumb__bg">
     <div class="container">
         <div class="row row-cols-1">
             <div class="col">
                 <div class="breadcrumb__content text-center">
-                    <h1 class="breadcrumb__content--title text-white mb-25">Shop Grid</h1>
+                    <h1 class="breadcrumb__content--title text-white mb-25">محصولات فوشگاه</h1>
                     <ul class="breadcrumb__content--menu d-flex justify-content-center">
-                        <li class="breadcrumb__content--menu__items"><a class="text-white" href="index.html">Home</a>
-                        </li>
-                        <li class="breadcrumb__content--menu__items"><span class="text-white">Shop Grid</span></li>
+                        <li class="breadcrumb__content--menu__items"><a class="text-white" href="{% url 'home' %}">صفحه اصلی</a>
+                        </li>&nbsp;/&nbsp;
+                        <li class="breadcrumb__content--menu__items"><a class="text-white" href="{% url 'product_list' %}">محصولات</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <!-- End breadcrumb section -->
 
 <!-- Start shop section -->
@@ -95,7 +95,7 @@
                     <circle cx="336" cy="384" r="28" fill="none" stroke="currentColor" stroke-linecap="round"
                         stroke-linejoin="round" stroke-width="28" />
                 </svg>
-                <span class="widget__filter--btn__text">Filter</span>
+                <span class="widget__filter--btn__text">فیلتر ها</span>
             </button>
             <div class="product__view--mode d-flex align-items-center">
                 <!-- <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex">
@@ -120,7 +120,7 @@
                                 <option {% if selected == "1" %} selected {% endif %} value="1"> مرتب سازی بر اساس جدید ترین</option>
                                 <option {% if selected == "2" %} selected {% endif %} value="2"> مرتب سازی بر اساس ارزان ترین</option>
                                 <option {% if selected == "3" %} selected {% endif %} value="3"> مرتب سازی بر اساس گران ترین</option>
-                                <option {% if selected == "4" %} selected {% endif %} value="4"> مرتب سازی بر اساس محبوبیت</option>
+                                <option {% if selected == "4" %} selected {% endif %} value="4"> مرتب سازی بر اساس پر فروش ترین</option>
 
                             </select>
                         </div>
@@ -188,7 +188,7 @@
 
                                     <div class="col mb-30  shadow">
                                         <div class="product__items ">
-                                            <center>
+                                            
                                             <div class="product__items--thumbnail">
                                                 <a class="product__items--link"
                                                     href="{% url 'product_detail' product.id %}" style="padding: 3px;">
@@ -224,13 +224,13 @@
 
                                                 {% if product.status == False  %}
                                                 <div class="product__badge">
-                                                    <span class="product__badge--items sale">Sale</span>
+                                                    <span class="product__badge--items sale">ناموجود</span>
                                                 </div>
 
                                                 {% endif %}
 
                                             </div>
-                                        </center>
+                                        
                                             <div class="product__items--content">
                                                 <center>
                                                     <span class="product__items--content__subtitle"><a
@@ -294,8 +294,7 @@
                                                                                 </g>
                                                                             </g>
                                                                         </svg>
-                                                                        <span class="add__to--cart__text"> Add to
-                                                                            cart</span>
+                                                                        <span class="add__to--cart__text"> اضافه به سبد خرید</span>
                                                                     </a>
                                                                 </li>
                                                                 <li class="product__items--action__list">

@@ -16,15 +16,25 @@ class Image(models.Model):
         return self.title
     # def __call__(self):
     #     return format_html('<img src="{}" style="max-width:50px; max-height:50px"/>'.format(self.image.url))
+    class Meta:
+        verbose_name_plural='تصاویر محصولات'
 
-
-
+class slide(models.Model):
+    image=models.ImageField(upload_to='slide_img')
+    title = models.CharField(max_length=60, blank=True)
+    def __str__(self):
+        return self.title
+    class Meta:
+        verbose_name_plural='اسلاید های صفحه اصلی'
+    
 class Discount(models.Model):
     name=models.CharField(max_length=90)
     discount=models.FloatField()
     
     def __str__(self):
         return str(self.discount)
+    class Meta:
+        verbose_name_plural='تخفیف ها'
 
 class Category(models.Model):
     title = models.CharField(max_length=100)
@@ -33,6 +43,8 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+    class Meta:
+        verbose_name_plural='دسته بندی ها'
 
 
 class Product(models.Model):
@@ -59,6 +71,8 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+    class Meta:
+        verbose_name_plural='محصولات'
 
 
 
@@ -68,7 +82,8 @@ class Color(models.Model):
     def __str__(self):
         return self.color1
     
-
+    class Meta:
+         verbose_name_plural='رنگ ها'
 class Property(models.Model):
 
     OPTIONS = [

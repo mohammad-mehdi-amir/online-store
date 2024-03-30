@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 from orders.models import Customer
-from .models import Image,Category,Product,Wishlist
+from .models import *
 from carts.forms import AddToCartForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -23,6 +23,7 @@ class Homeview(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(Homeview, self).get_context_data(**kwargs)
         context['new_products']= Product.objects.select_related('category','discount').prefetch_related('image').all().order_by('-id')[0:10]
+        context['slides']=slide.objects.all()
         
         return context
     
@@ -46,7 +47,7 @@ def list_product_view(request):
         order_method=request.GET.get('order_by')
         product_list_sorted=Product.objects.select_related('category','discount').all()
      # Pagination
-    paginator = Paginator(product_list_sorted, 4) # Show number products per page
+    paginator = Paginator(product_list_sorted, 12) # Show number products per page
 
     page = request.GET.get('page')
     try:

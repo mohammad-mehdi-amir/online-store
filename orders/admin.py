@@ -6,7 +6,19 @@ from django.utils.http import urlencode
 from django.utils.html import format_html
 from products.models import Category
 from .models import order,order_item,Province,Customer
-# Register your models here.
+from solo.admin import SingletonModelAdmin
+from orders.models import Shiping_price
+from jalali_date import datetime2jalali, date2jalali
+from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin	
+    
+
+admin.site.register(Shiping_price, SingletonModelAdmin)
+
+
+
+
+
+
 class orderInLine(admin.TabularInline):
     readonly_fields=['order','product','size','color','quantity','price','total_price']
     model=order_item
@@ -17,13 +29,17 @@ class orderInLine(admin.TabularInline):
 
 @admin.register(order)
 class orderAdmin(ModelAdmin):
-    list_display=['first_name','last_name','province','city','order_status','peyment_status','datetime_order']
+    list_display=['first_name','last_name','province','city','order_status','peyment_status','get_created_jalali']
     inlines=[
         orderInLine,
     ]
     autocomplete_fields=['province','customer']
     list_filter=['order_status','datetime_order','peyment_status']
     list_editable=['order_status']
+    
+    @admin.display(description='تاریخ سفارش', ordering='datetime_order')
+    def get_created_jalali(self, obj):
+	    return datetime2jalali(obj.datetime_order).strftime('%Y/%m/%d %H:%M:%S')
 
 @admin.register(order_item)
 class Orderitem(ModelAdmin):
@@ -51,10 +67,17 @@ class ProvinceAdmin(ModelAdmin):
     list_display=['name']
     search_fields=['name']
     
+class customerOrderInline(admin.StackedInline):
+    readonly_fields=['first_name','last_name','province','city','order_status','peyment_status','datetime_order']
+    model=order
+    extra=0
 @admin.register(Customer)
 class CustomerAdmin(ModelAdmin):
-    user_model=settings.AUTH_USER_MODEL
     
+    user_model=settings.AUTH_USER_MODEL
+    inlines=[
+        customerOrderInline,
+    ]
     list_select_related=['user']
     list_display=['user','first_name','last_name','email']
     search_fields=['user__username','phone_number','user__email']

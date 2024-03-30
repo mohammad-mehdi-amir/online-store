@@ -43,21 +43,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    'jalali_date',
-    
     #my app
     'accounts',
     'products',
     'orders',
     'carts',
     'peyments',
-    #all atuh
-    # 'django_otp',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     # Other apps…
+    'jalali_date',
     'phonenumber_field',
     'mathfilters',
     'ckeditor',
@@ -65,6 +61,8 @@ INSTALLED_APPS = [
     'rosetta',
     'django.contrib.humanize',
     'crispy_forms',
+    'solo',
+   
 
 ]
 
@@ -162,8 +160,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-# LANGUAGE_CODE = 'fa'
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa'
 
 LANGUAGES=(
     ('en','English'),

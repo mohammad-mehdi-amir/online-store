@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-27 14:12+0330\n"
+"POT-Creation-Date: 2024-03-29 06:07+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,18 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#: carts/views.py:48
+
+#: carts/views.py:47
 msgid " updated successfuly"
 msgstr ""
 
-#: carts/views.py:50
+#: carts/views.py:49
 msgid " added to cart successfuly"
 msgstr ""
 
-#: carts/views.py:53
-msgid " does not exist"
-msgstr ""
-
-#: carts/views.py:67
+#: carts/views.py:68
 msgid " remove form cart successfully"
 msgstr ""

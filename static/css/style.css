@@ -2565,7 +2565,7 @@ body.overlay__active::before,
   position: fixed;
   width: 100%;
   top: 0;
-  background:#e2301d;
+  background:#930d03;
   left: 0;
   z-index: 99;
   padding: 1.5rem 0;
@@ -2914,17 +2914,20 @@ body.overlay__active::before,
 
 .main__header {
   padding: 1.2rem 0;
+  background:#930d03;
 }
 
 @media only screen and (min-width: 768px) {
   .main__header {
     padding: 1.5rem 0;
+    background:#930d03;
   }
 }
 
 @media only screen and (min-width: 992px) {
   .main__header {
     padding: 2rem 0;
+    background:#930d03;
   }
 }
 
@@ -2944,9 +2947,9 @@ body.overlay__active::before,
   }
 }
 
-.header__search--form {
-  border: 1px solid var(--border-color);
-}
+/* .header__search--form {
+
+} */
 
 .select {
   position: relative;
@@ -3033,7 +3036,7 @@ body.overlay__active::before,
   border: 0;
   padding: 0 1.5rem;
   line-height: 2rem;
-  background: var(--secondary-color);
+  background:#930d03;
 }
 
 .header__search--button:hover {
@@ -3075,12 +3078,12 @@ body.overlay__active::before,
 .header__account--btn {
     margin-left: 1rem;
   position: relative;
-  color: var(--text-gray-color);
+  color: #3f0501;
   text-align: center;
 }
 
 .header__account--btn > * {
-  pointer-events: none;
+  pointer-events:painted;
 }
 
 .header__account--btn:hover {

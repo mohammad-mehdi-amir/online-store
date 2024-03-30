@@ -7,22 +7,33 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.conf import settings
 from jalali_date.fields import JalaliDateTimeField
 from products.models import Property,Product
-# from accounts.models import Province
+from solo.models import SingletonModel
+
+class Shiping_price(SingletonModel):
+    shiping_price=models.PositiveIntegerField( default=45000)
+    def __str__(self):
+        return str(self.shiping_price)
+    class Meta:
+        verbose_name = "تغییر هزینه پست و بسته بندی"
+
+
 
 class Customer(models.Model):
     user=models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='customer')
-    birht_date=models.DateField(null=True,blank=True,verbose_name=_(' birth date :'))
+    # birht_date=models.DateField(null=True,blank=True,verbose_name=_(' birth date :'))
     
     def __str__(self):
         return self.user.username
-
+    class Meta:
+        verbose_name_plural='مشتری ها'
 
 
 class Province(models.Model):
     name=models.CharField(max_length=70)
     def __str__(self):
         return self.name
-    
+    class Meta:
+        verbose_name_plural ='استان ها'
 
 # class Address(models.Model):
 #     customer=models.Forginkey(Customer,on_delete=models.CASECADE,related_name='address')
@@ -36,14 +47,14 @@ class Province(models.Model):
     
 class order(models.Model):
     PEYMENT_OPTIONS= [
-        ('cancel','Cancel'),
-        ('waiting','Waiting'),
-        ('peyed','Peyed')
+        ('لغو شده','لغو شده'),
+        ('در انتظار','در انتظار'),
+        ('پرداخت شده','پرداخت شده')
     ]
     ORDER_OPTIONS=[
-        ('confirming','Confirming'),
-        ('processing','Processing'),
-        ('posted','Poested')
+        ('در انتظار تایید','در انتظار تایید'),
+        ('در حال آماده سازی','در حال آماده سازی'),
+        ('ارسال شده','ارسال شده')
     ]
     customer=models.ForeignKey(Customer,on_delete=models.CASCADE,related_name='orders',null=True,verbose_name=_('customer :'))
     phone_number=PhoneNumberField()
@@ -78,6 +89,8 @@ class order(models.Model):
     
     def __str__(self):
         return f'{self.id}-{self.customer}'
+    class Meta:
+        verbose_name_plural ='سفارشات'
     
 class order_item(models.Model):
     order=models.ForeignKey(order,on_delete=models.CASCADE,related_name='items')

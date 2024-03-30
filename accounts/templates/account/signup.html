@@ -9,7 +9,7 @@
 <main class="main__content_wrapper">
 
     <!-- Start breadcrumb section -->
-    <section class="breadcrumb__section breadcrumb__bg">
+    <!-- <section class="breadcrumb__section breadcrumb__bg">
         <div class="container">
             <div class="row row-cols-1">
                 <div class="col">
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- End breadcrumb section -->
 
     <!-- Start login section  -->
@@ -40,7 +40,7 @@
 
                     <div class="account__login register">
                         <div class="account__login--header mb-25">
-                            <h2 class="account__login--header__title h3 mb-10">Create an Account</h2>
+                            <h2 class="account__login--header__title h3 mb-10">ساخت حساب کاربری</h2>
                             <p class="account__login--header__desc">Register here if you are a new customer</p>
                         </div>
                         <div class="account__login--inner">
@@ -48,35 +48,34 @@
                             <div class="alert alert-danger my-3">{{form.errors}}</div>
 
                             {% endif %}
-                            <input class="account__login--input" placeholder="Email Addres" name="email" type="text">
+                            <input class="account__login--input" placeholder="حساب ایمیل" name="email" type="text">
                             {% if form.email.errors %}
                             <div class="alert alert-danger my-3">{{form.email.errors}}</div>
 
                             {% endif %}
-                            <input class="account__login--input" placeholder="phone_number" name="phone_number" type="text">
+                            <input class="account__login--input" placeholder="شماره تلفن" name="phone_number" type="text">
                             {% if form.phone_number.errors %}
                             <div class="alert alert-danger my-3">{{form.phone_number.errors}}</div>
 
                             {% endif %}
-                            <input class="account__login--input" placeholder="Password" name="password1"
+                            <input class="account__login--input" placeholder="رمز عبور" name="password1"
                                 type="password">
                                 {% if form.password1.errors %}
                             <div class="alert alert-danger my-3">{{form.password1.errors}}</div>
 
                             {% endif %}
-                            <input class="account__login--input" placeholder="Confirm Password" name="password2"
+                            <input class="account__login--input" placeholder="تایید رمز عبور" name="password2"
                                 type="password">
                                 {% if form.password2.errors %}
                             <div class="alert alert-danger my-3">{{form.password2.errors}}</div>
 
                             {% endif %}
-                            <button class="account__login--btn primary__btn mb-10" type="submit">Submit &
-                                Register</button>
+                            <button class="account__login--btn primary__btn mb-10" type="submit">ثبت نام</button>
                             <div class="account__login--remember position__relative">
                                 <input class="checkout__checkbox--input" id="check2" type="checkbox">
                                 <span class="checkout__checkbox--checkmark"></span>
                                 <label class="checkout__checkbox--label login__remember--label" for="check2">
-                                    I have read and agree to the terms & conditions</label>
+                                    با قوانین و مقررات موافق هستم</label>
                             </div>
                         </div>
                     </div>
@@ -90,7 +89,7 @@
     <!-- End login section  -->
 
     <!-- Start shipping section -->
-    <section class="shipping__section2 shipping__style3 section--padding pt-0">
+    <!-- <section class="shipping__section2 shipping__style3 section--padding pt-0">
         <div class="container">
             <div class="shipping__section2--inner shipping__style3--inner d-flex justify-content-between">
                 <div class="shipping__items2 d-flex align-items-center">
@@ -131,7 +130,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- End shipping section -->
 
 </main>

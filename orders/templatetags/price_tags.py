@@ -1,9 +1,10 @@
 from django import template
 from django.conf import settings
+from orders.models import Shiping_price
 register = template.Library()
 
     
-SHIPING_PRICE=45_000
+SHIPING_PRICE=Shiping_price.objects.get().shiping_price
 
 
 @register.filter
