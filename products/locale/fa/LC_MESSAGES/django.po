@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-29 06:07+0330\n"
-"PO-Revision-Date: 2024-03-30 01:25+0330\n"
+"POT-Creation-Date: 2024-03-31 05:39+0330\n"
+"PO-Revision-Date: 2024-03-31 05:39+0330\n"
 "Last-Translator: محمد امیر <mm@mm.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,62 +19,66 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Translated-Using: django-rosetta 0.9.9\n"
 
-#: products/models.py:39
+#: products/models.py:57
 msgid "name :"
 msgstr "نام :"
 
-#: products/models.py:42
-msgid "status"
-msgstr "وضعیت"
+#: products/models.py:58
+msgid "price :"
+msgstr "قیمت :"
 
-#: products/models.py:44
+#: products/models.py:60
+msgid "status"
+msgstr "وضعیت :"
+
+#: products/models.py:62
 msgid "category :"
 msgstr "دسته بندی :"
 
-#: products/models.py:46
+#: products/models.py:64
 msgid "discount"
-msgstr "تخفیف"
+msgstr "تخفیف :"
 
-#: products/models.py:50
+#: products/models.py:68
 msgid " add date"
-msgstr "تاریخ ساخت"
+msgstr "تاریخ ساخت :"
 
-#: products/models.py:51
+#: products/models.py:69
 msgid "edite date"
 msgstr "تاریخ ویرایش"
 
-#: products/models.py:53
+#: products/models.py:71
 msgid "images :"
 msgstr "تصاویر :"
 
-#: products/models.py:55
+#: products/models.py:73
 msgid "material :"
 msgstr "جنس :"
 
-#: products/models.py:56
+#: products/models.py:74
 msgid " decription :"
 msgstr "توضیحات :"
 
-#: products/models.py:67
+#: products/models.py:87
 msgid " color"
-msgstr "رنگ"
+msgstr "رنگ :"
 
-#: products/models.py:97 products/models.py:112
+#: products/models.py:133 products/models.py:147
 msgid "product :"
 msgstr "محصول :"
 
-#: products/models.py:98
+#: products/models.py:134
 msgid "size"
 msgstr "اندازه"
 
-#: products/models.py:99
+#: products/models.py:135
 msgid "color"
 msgstr "رنگ"
 
-#: products/models.py:101
+#: products/models.py:136
 msgid "number :"
 msgstr "تعداد : "
 
-#: products/models.py:111
+#: products/models.py:146
 msgid "customer :"
 msgstr "مشتری :"

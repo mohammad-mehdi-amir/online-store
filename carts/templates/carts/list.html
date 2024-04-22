@@ -1,0 +1,33 @@
+{% extends '_base.html' %}
+
+
+{% block content %}
+    
+
+<div>
+    
+    <div style="border: 1px solid rgb(193, 193, 193);border-radius: 10px; margin: 10px; height:fit-content;width: 600;" >
+        {% for item in orders %}
+        <div class="container text-center">
+            <div class="row">
+                <div class="col">
+                    نام : {{item.first_name}}
+                </div>
+                <div class="col">
+                    نام خانوادگی : {{item.last_name}}
+                </div>
+                
+            </div>
+        </div>
+        
+        <br>
+        
+        {% endfor %}
+    </div>
+    
+</div>
+
+
+
+{% endblock content %}
+    

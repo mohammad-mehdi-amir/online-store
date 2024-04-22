@@ -24,6 +24,7 @@
                             </tr>
                         </thead>
                         
+                        {% if  wishlist %}
                         {% for item in wishlist %}
                         <tbody class="cart__table--body">
                             <tr class="cart__table--body__items">
@@ -62,6 +63,12 @@
                             
                         </tbody>
                         {% endfor %}
+                        {% else %}
+                        <center>
+                        <h6> تا کنون محصولی مورد علاقه شما نبوده است</h6></center>
+                        {% endif %}
+                            
+                        
                     </table> 
                             
                             

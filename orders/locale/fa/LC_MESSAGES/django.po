@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-29 06:07+0330\n"
-"PO-Revision-Date: 2024-03-30 01:48+0330\n"
+"POT-Creation-Date: 2024-03-31 05:26+0330\n"
+"PO-Revision-Date: 2024-03-31 05:34+0330\n"
 "Last-Translator: محمد امیر <mm@mm.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,13 +19,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Translated-Using: django-rosetta 0.9.9\n"
 
-#: orders/models.py:23
-msgid " birth date :"
-msgstr "تاریخ تولد :"
+#: orders/admin.py:41
+msgid "update status orders to  POSTED"
+msgstr "تغییر وضعیت سفارش به \"ارسال شده\""
 
 #: orders/models.py:59
 msgid "customer :"
 msgstr "مشتری :"
+
+#: orders/models.py:60
+msgid "phone number :"
+msgstr "تلفن همراه"
 
 #: orders/models.py:61
 msgid "First Name :"
@@ -51,18 +55,39 @@ msgstr "آدرس :"
 msgid "postal code :"
 msgstr "کد پستی :"
 
+#: orders/models.py:77
+msgid "peyment_status :"
+msgstr "وضعیت پرداخت"
+
+#: orders/models.py:78
+msgid "order_status :"
+msgstr "وضعیت سفارش"
+
 #: orders/models.py:80
 msgid "Do You Have Any Note For This Order?"
 msgstr "یادداشتی برای این سفارش دارید؟"
 
-#: orders/views.py:51
+#: orders/models.py:83
+#, fuzzy
+#| msgid "postal code :"
+msgid "total order price:"
+msgstr "کد پستی :"
+
+#: orders/models.py:85
+msgid " zarinpal authority code:"
+msgstr "کد احراز پرداخت"
+
+#: orders/views.py:52
 msgid "please try again"
 msgstr "لطفا دوباره تلاش کنید"
 
-#: orders/views.py:54
+#: orders/views.py:55
 msgid "your cart is empty"
 msgstr "سبد خرید خالی است"
 
-#: orders/views.py:59
+#: orders/views.py:60
 msgid "your order has not been registered, please try again"
 msgstr "سفارش شما ثبت نشد ٫لطفا دوباره تلاش کنید"
+
+#~ msgid " birth date :"
+#~ msgstr "تاریخ تولد :"

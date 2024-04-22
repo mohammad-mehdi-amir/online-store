@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-29 06:07+0330\n"
+"POT-Creation-Date: 2024-03-31 05:26+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2047,3 +2047,12 @@ msgid "{len_type} values are required, but {len_value} was given."
 msgid_plural "{len_type} values are required, but {len_value} were given."
 msgstr[0] ""
 msgstr[1] ""
+
+#: venv/lib/python3.11/site-packages/django_cryptography/fields.py:23
+msgid "Pickled data"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/django_cryptography/fields.py:109
+#, python-format
+msgid "Encrypted %s"
+msgstr ""

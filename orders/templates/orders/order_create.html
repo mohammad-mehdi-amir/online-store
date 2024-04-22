@@ -6,6 +6,10 @@
 {% load solo_tags %}
 {% load custom_mathfilter %}
 {% load humanize %}
+{% load tags_for_cart %}
+
+
+
 {% block content %}
 
 
@@ -18,7 +22,7 @@
             <div class="main checkout__mian shadow"  style="margin: 20px; ">
                 <header class="main__header checkout__mian--header mb-30">
                     <details class="order__summary--mobile__version">
-                        <summary class="order__summary--toggle border-radius-5">
+                        <summary class="order__summary--toggle ">
                             <span class="order__summary--toggle__inner">
                                 <span class="order__summary--toggle__icon">
                                     <svg width="20" height="19" xmlns="http://www.w3.org/2000/svg">
@@ -45,17 +49,22 @@
                                     <tbody class="summary__table--body">
                                         
                                         {% for item in cart %}
+                                        
+                                        {% with item.product_object|get_obj as pro_obj %}
+                                            
+                                        
+                                            
                             <tr class="cart__table--body__items">
                                 <td class="cart__table--body__list">
                                     <div class="product__image two  d-flex align-items-center">
                                         <div class="product__thumbnail border-radius-5">
                                             <a href="product-details.html"><img class="border-radius-5"
-                                                    src="{{item.product_object.image.first.image.url}}" alt="cart-product"></a>
+                                                    src="{{pro_obj.image.first.image.url}}" alt="cart-product"></a>
                                             <span class="product__thumbnail--quantity">{{item.quantity}}</span>
                                         </div>
                                         <div class="product__description">
                                             <h3 class="product__description--name h4"><a
-                                                    href="{% url 'product_detail' item.product_object.id  %}">{{item.product_object.title}}</a></h3>
+                                                    href="{% url 'product_detail' pro_obj.id  %}">{{pro_obj.title}}</a></h3>
                                             
                                             
                                         </div>
@@ -74,7 +83,7 @@
     
                                 
                             </tr>
-
+                            {% endwith %}
                             {% endfor %}
                                     </tbody>
                                 </table>
@@ -131,7 +140,7 @@
                                 <div class="checkout__email--phone mb-12">
                                     <label>
                                         <input class="checkout__input--field border-radius-5" name="phone_number"
-                                            placeholder="Email or mobile phone mumber" type="text" value="{% if user.phone_number %}{{user.phone_number}}{% else %}{% endif %}" name="phone_number">
+                                            placeholder="شماره تلفن همراه مانند : +989121234567" type="text" value="{% if user.phone_number %}{{user.phone_number}}{% else %}{% endif %}" name="phone_number">
 
                                     </label>
                                 </div>
@@ -144,8 +153,13 @@
                         </div>
                         <div class="checkout__content--step section__shipping--address" >
                             <div class="section__header mb-25">
-                                <h3 class="section__header--title" style=" color: var(--secondary-color);">اطلاعات ارسال</h3>
+                                <h3 class="section__header--title" style=" color: var(--secondary-color);">اطلاعات سبد خرید</h3>
+                                <p>برای تجربه کابری بهتر لطفا در بخش حساب کاربری بخش اطلاعات کاربری را پر کنید</p>
                             </div>
+                            {% if form.postal_code.errors %}
+                                        <div class="alert alert-danger my-3">{{form.postal_code.errors}}</div>
+
+                                        {% endif %}
                             <div class="section__shipping--address__content">
                                 <div class="row">
                                     <div class="col-lg-6 mb-12">
@@ -153,7 +167,7 @@
                                             <label>
                                                 <input class="checkout__input--field border-radius-5"
                                                     placeholder="نام" type="text" name="first_name"
-                                                    value={{customer.user.first_name}}>
+                                                    value={{user.first_name}}>
                                             </label>
                                         </div>
                                         {% if form.first_name.errors %}
@@ -166,7 +180,7 @@
                                             <label>
                                                 <input class="checkout__input--field border-radius-5"
                                                     placeholder="نام خانوادگی" type="text" name="last_name"
-                                                    value={{customer.user.last_name}}>
+                                                    value={{user.last_name}}>
                                             </label>
                                         </div>
                                         {% if form.last_name.errors %}
@@ -221,7 +235,7 @@
                                         <div class="checkout__input--list">
                                             <label>
                                                 <input class="checkout__input--field border-radius-5" name="postal_code"
-                                                    placeholder="کد پستی" type="number" value={{order_info.posatl_code}}>
+                                                    placeholder="کد پستی (اختیاری)" type="number" value={{order_info.posatl_code}}>
                                             </label>
                                         </div>
                                         {% if form.postal_code.errors %}
@@ -260,17 +274,23 @@
                         <tbody class="cart__table--body">
 
                             {% for item in cart %}
+                            {% with item.product_object|get_obj as pro_obj %}
+                            
+                         
+                                
+                           
+                                
                             <tr class="cart__table--body__items">
                                 <td class="cart__table--body__list">
                                     <div class="product__image two  d-flex align-items-center">
                                         <div class="product__thumbnail border-radius-5">
                                             <a href="product-details.html"><img class="border-radius-5"
-                                                    src="{{item.product_object.image.first.image.url}}" alt="cart-product"></a>
+                                                    src="{{pro_obj.image.first.image.url}}" alt="cart-product"></a>
                                             <span class="product__thumbnail--quantity">{{item.quantity}}</span>
                                         </div>
                                         <div class="product__description">
                                             <h3 class="product__description--name h4"><a
-                                                    href="product-details.html">{{item.product_object.title}}</a></h3>
+                                                    href="product-details.html">{{pro_obj.title}}</a></h3>
                                             
                                             
                                         </div>
@@ -289,7 +309,7 @@
     
                                 
                             </tr>
-
+                            {% endwith %}
                             {% endfor %}
 
 
@@ -310,17 +330,18 @@
                     <table class="checkout__total--table">
                         <tbody class="checkout__total--body">
                             <tr class="checkout__total--items">
-                                <td class="checkout__total--title text-left">Subtotal </td>
+                                <td class="checkout__total--title text-left">قیمت کل سفارش </td>
                                 <td class="checkout__total--amount text-right" style="position: absolute ;left: 195px;">{{cart.get_total_price|intcomma:False|to_persian}} تومان</td>
                             </tr>
                             <tr class="checkout__total--items">
-                                <td class="checkout__total--title text-left">Shipping</td>
-                                <td class="checkout__total--calculated__text text-right" style="position: absolute ;left: 195px;">45,000 تومان</td>
+                                <td class="checkout__total--title text-left">هزینه بسته بندی و ارسال</td>
+                                <td class="checkout__total--calculated__text text-right" style="position: absolute ;left: 195px;">                                میشود:{% get_solo 'orders.Shiping_price' as shiping_price %}
+                                    {{ shiping_price.shiping_price|intcomma:False }}تومان</td>
                             </tr>
                         </tbody>
                         <tfoot class="checkout__total--footer">
                             <tr class="checkout__total--footer__items">
-                                <td class="checkout__total--footer__title checkout__total--footer__list text-left">Total
+                                <td class="checkout__total--footer__title checkout__total--footer__list text-left">هزینه قابل پرداخت&nbsp;&nbsp;
                                 </td>
                                 <td class="checkout__total--footer__amount checkout__total--footer__list text-right" >
                                     {{cart.get_total_price |apply_shiping_price|intcomma:False|to_persian}} تومان</td>

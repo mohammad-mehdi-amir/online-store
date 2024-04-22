@@ -5,11 +5,11 @@ from typing import Any
 from django.shortcuts import redirect, render
 from django.views import generic
 from django.contrib.auth.decorators import login_required
-from orders.models import Customer
+
 from .models import *
 from carts.forms import AddToCartForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.db.models import Count,Sum
 from django.db.models import Q
 # Create your views here.
 
@@ -22,7 +22,9 @@ class Homeview(generic.ListView):
     
     def get_context_data(self, **kwargs):
         context = super(Homeview, self).get_context_data(**kwargs)
-        context['new_products']= Product.objects.select_related('category','discount').prefetch_related('image').all().order_by('-id')[0:10]
+        context['new_products']= Product.objects.select_related('category','discount').prefetch_related('image').all().order_by('-id')[0:20]
+        # product_list_sorted=Product.objects.select_related('category','discount').all()
+        # context['bestsell_products']= sorted(product_list_sorted, key=lambda x: x.order_item.aggregate(quantity_sum=Sum('quantity'))['quantity_sum'] or 0,reverse=True)
         context['slides']=slide.objects.all()
         
         return context
@@ -40,6 +42,9 @@ def list_product_view(request):
             product_list_sorted=Product.objects.select_related('category','discount').all().order_by('price')
         elif order_method =="3":
             product_list_sorted=Product.objects.select_related('category','discount').all().order_by('-price')
+        elif order_method =="4":
+            product_list_sorted=Product.objects.select_related('category','discount').all()
+            product_list_sorted = sorted(product_list_sorted, key=lambda x: x.order_item.aggregate(quantity_sum=Sum('quantity'))['quantity_sum'] or 0,reverse=True)
         else:
             product_list_sorted=Product.objects.select_related('category','discount').all()   
     
@@ -63,44 +68,8 @@ def list_product_view(request):
         'products': products,
         'selected': order_method
     })
-    
-    
-    
-    
-    # return render(request,'products/list_product.html',{
-    #     'products':product_list_sorted,
-    #     'selected':order_method
-    # })
 
 
-# class ListProductView(generic.ListView):
-    model = Product
-    template_name = 'products/list_product.html'
-    context_object_name = 'products'
-    context_object_name='products'
-    http_method_names = ["get","post"]
-    def get_queryset(self):
-        if self.request.method =="post":
-        
-            ordering = self.request.POST['order_by']
-            
-            
-            
-            print(ordering)
-
-            if ordering == "1":
-                return Product.objects.all().order_by('-id')
-            elif ordering == "2":
-                return Product.objects.all().order_by('price')
-            elif ordering == "3":
-                return Product.objects.all().order_by('-price')
-            # elif ordering == "4":
-            #     return Product.objects.order_by('-popularity')
-            else:
-                return Product.objects.all()
-        else:
-                return Product.objects.all()
-            
     
 class ListCategoryView(generic.ListView):
     model = Product
@@ -159,7 +128,7 @@ class WishlistView(generic.ListView):
     template_name='products/wishlist.html'
     def get_context_data(self, **kwargs: Any):
         context= super().get_context_data(**kwargs)
-        context['wishlist']=Wishlist.objects.select_related('product','customer').filter(customer=self.request.user.customer)
+        context['wishlist']=Wishlist.objects.select_related('product','user').filter(user=self.request.user)
         return context
     
     
@@ -169,13 +138,13 @@ def add_to_wishlist(request,pk):
 
     try:
 
-        customer_obj=request.user.customer
-        print(customer_obj,'<<<,')
+       
+        
         product_obj=Product.objects.select_related('category').get(id=pk)
-        print(product_obj,'<<<,')
+        
         Wishlist.objects.get_or_create(
             product=product_obj,
-            customer=customer_obj,
+            user=request.user,
         )
     except Exception as e:
         print(e,'<---------')
@@ -187,12 +156,12 @@ def add_to_wishlist(request,pk):
 
 def remove_from_wishlist(request,pk):
 
-    customer_obj=request.user.customer
+    
     product_obj=Product.objects.get(id=pk)
     
     Wishlist.objects.get(
         product=product_obj,
-        customer=customer_obj,
+        user=get_user_model(),
     ).delete()
 
     return redirect('wishlist')

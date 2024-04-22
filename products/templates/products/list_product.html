@@ -1,6 +1,5 @@
 {% extends '_base.html' %}
 
-{% block content %}
 {% load mathfilters %}
 {% load custom_mathfilter %}
 {% load static  %}
@@ -8,13 +7,22 @@
 {% load humanize %}
 
 
+{% block title %}
+بوتیک تورنتو صفحه محصولات 
+{% endblock title %}
+
+
+
+
+
+{% block content %}
 <!-- Start offcanvas filter sidebar -->
 <div class="offcanvas__filter--sidebar widget__area">
     <button type="button" class="offcanvas__filter--close" data-offcanvas>
         <svg class="minicart__close--icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="32" d="M368 368L144 144M368 144L144 368"></path>
-        </svg> <span class="offcanvas__filter--close__text">Close</span>
+        </svg> <span class="offcanvas__filter--close__text"></span>
     </button>
     <div class="offcanvas__filter--sidebar__inner">
         <div class="single__widget widget__bg">
@@ -22,16 +30,16 @@
             <ul class="widget__categories--menu">
 
                 {% for item in Category %}
-
+                <a href="{% url 'category_list' item.id %}">
                 <li class="widget__categories--menu__list">
                     <label class="widget__categories--menu__label d-flex align-items-center"
 
                         alt="categories-img">
-                        <spanclass="widget__categories--menu__text">{{item.title}}</span>
+                        <spanclass="widget__categories--menu__text">{{item.title}} </span>
 
                     </label>
 
-                </li>
+                </li></a>
 
                 {% endfor %}
 
@@ -191,7 +199,7 @@
                                             
                                             <div class="product__items--thumbnail">
                                                 <a class="product__items--link"
-                                                    href="{% url 'product_detail' product.id %}" style="padding: 3px;">
+                                                href="{{product.get_absolute_url}}" style="padding: 3px;">
 
                                                     <img class="product__items--img product__primary--img"
                                                         src="{{product.image.first.image.url}}" alt={{product.title}}
@@ -237,7 +245,7 @@
                                                             href="{% url 'category_list' product.category.id %}">{{product.category}}</a></span>
 
                                                     <h3 class="product__items--content__title h4"><a
-                                                            href="product-details.html">{{product.title}}</a></h3>
+                                                            href="{{product.get_absolute_url}}">{{product.title}}</a></h3>
                                                     <div class="product__items--price">
 
                                                         {% if product.discount or product.category.discount %}
@@ -272,7 +280,7 @@
                                                             <ul>
                                                                 <li class=" product__items--action__list ">
                                                                     <a class="variant__buy--now__btn primary__btn"
-                                                                        href="{% url 'product_detail' product.id %}">
+                                                                        href="{{product.get_absolute_url}}">
                                                                         <svg class="product__items--action__btn--svg"
                                                                             xmlns="http://www.w3.org/2000/svg"
                                                                             width="22.51" height="20.443"

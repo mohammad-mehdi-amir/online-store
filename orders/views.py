@@ -25,20 +25,20 @@ def order_create(request):
                 
                 
                 order_obj =order_form.save(commit=False)
-                order_obj.customer=request.user.customer
+                order_obj.user=request.user
                 order_obj.phone_number=order_form.cleaned_data['phone_number']
                 order_obj.total_price=cart.get_total_price()+SHIPING_PRICE
                 order_obj.save()
                 try:
                     for item in cart:
-                        
+                        pro=Product.objects.get(id=item['product_object'])
                         order_item.objects.create(
                             order=order_obj,
-                            product=Product.objects.get(id=int(item['product_object'].id)),
+                            product=Product.objects.get(id=pro.id),
                             size=item['size'],
                             color=item['color'],
                             quantity=item['quantity'],
-                            price=item['product_object'].price,
+                            price=pro.price,
                             total_price=item['total_price']
                         )
                     
@@ -48,7 +48,7 @@ def order_create(request):
                 
                 
                 except Exception as e:
-                    
+                   
                     messages.error(request,_('please try again'))
                     last_order_info=1
             else:
@@ -56,13 +56,13 @@ def order_create(request):
                 last_order_info=1
                   
         else:
-            print(order_form.errors,'<-----')
+            
             messages.error(request,_('your order has not been registered, please try again'))
             last_order_info=1
     else:
         order_form=AddOrderForm()
-        if request.user.customer.orders.exists():
-            last_order = request.user.customer.orders.last()
+        if request.user.orders.exists():
+            last_order = request.user.orders.last()
             last_order_info = last_order  # You can access the order fields directly
 
 
@@ -73,7 +73,7 @@ def order_create(request):
     return render(request,'orders/order_create.html',{
         'form':order_form,
         'province':Province.objects.all(),
-        'customer':request.user.customer,
+        'customer':request.user,
         'order_info':last_order_info
 
     })
@@ -84,7 +84,9 @@ class OrderListView(generic.ListView):
     template_name='orders/order_list.html'
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context=super().get_context_data(**kwargs)
-        context['orders']=order.objects.prefetch_related('items').filter(customer=self.request.user.customer.id).order_by('-datetime_order')
+        context['orders']=order.objects.prefetch_related('items').filter(user=self.request.user.id).order_by('-datetime_order')
         return context
         
-    
+
+
+        

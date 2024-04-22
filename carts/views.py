@@ -2,10 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from carts.cart import Cart
 from .forms import AddToCartForm
 from products.models import Product,Wishlist,Property
+from orders.models import order
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from orders.models import Customer
+
 # Create your views here.
 
 

@@ -1,0 +1,21 @@
+{
+    "platform": "django",
+    "app": "toronto",
+    "django": {
+        "mirror": false
+    },
+    "disks": [
+        {
+            "name": "static-disk",
+            "mountTo": "staticfiles"
+        },
+        {
+            "name": "media-disk",
+            "mountTo": "media"
+        }
+    ],
+     "build": {
+        "location": "germany"
+     }
+
+}

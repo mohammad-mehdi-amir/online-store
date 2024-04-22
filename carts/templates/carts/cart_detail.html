@@ -3,7 +3,8 @@
 {% load solo_tags %}
 {% load humanize %}
 {% load persian_number %}
-
+{% load tags_for_cart %}
+{% load price_tags %}
 
 
 {% block content %}
@@ -59,12 +60,16 @@
 
 
                                 {% for orderitem in cart %}
-
+                                {% with orderitem.product_object|get_obj as pro_obj %}
+                                
+                                  
+                               
+                                    
                                 <tr class="cart__table--body__items">
                                     <td class="cart__table--body__list">
                                         <div class="cart__product d-flex align-items-center">
                                             <a class="cart__remove--btn"
-                                                href="{% url 'carts:cart_remove' product=orderitem.product_object.id color=orderitem.color size=orderitem.size  %}"
+                                                href="{% url 'carts:cart_remove' product=pro_obj.id color=orderitem.color size=orderitem.size  %}"
                                                 aria-label="search button" type="button">
                                                 <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 24 24" width="16px" height="16px">
@@ -73,13 +78,13 @@
                                                 </svg>
                                             </a>
                                             <div class="cart__thumbnail" style="padding: 10px;">
-                                                <a href="product-details.html"><img class="border-radius-5"
-                                                        src="{{orderitem.product_object.image.first.image.url}}"
+                                                <a href="{% url 'product_detail' pro_obj.id %}"><img class="border-radius-5"
+                                                        src="{{pro_obj.image.first.image.url}}"
                                                         alt="cart-product"></a>
                                             </div>
                                             <div class="cart__content">
                                                 <h4 class="cart__content--title"><a
-                                                        href="product-details.html">{{orderitem.product_object.title}}</a>
+                                                        href="{% url 'product_detail' pro_obj.id %}">{{pro_obj.title}}</a>
                                                 </h4>
                                                 <span class="cart__content--variant">رنک:
                                                     {{orderitem.color}}</span>
@@ -89,20 +94,20 @@
                                     </td>
                                     <td class="cart__table--body__list">
 
-                                        {% if orderitem.product_object.discount %}
+                                        {% if pro_obj.discount %}
 
                                         <span
-                                            class="cart__price">{{orderitem.product_object.price |custom_add:orderitem.product_object.discount.discount|intcomma:False|to_persian}}
+                                            class="cart__price">{{pro_obj.price |custom_add:pro_obj.discount.discount|intcomma:False|to_persian}}
                                             تومان</span>
                                         {% else %}
                                         <span
-                                            class="cart__price">{{orderitem.product_object.price|intcomma:False|to_persian}}
+                                            class="cart__price">{{pro_obj.price|intcomma:False|to_persian}}
                                             تومان</span>
                                         {% endif %}
 
                                     </td>
                                     <td class="cart__table--body__list">
-                                        <form action="{% url 'carts:cart_add' orderitem.product_object.id %}"
+                                        <form action="{% url 'carts:cart_add' pro_obj.id %}"
                                             method="post">
                                             {% csrf_token %}
                                             <input type="hidden" name="color" value={{orderitem.color}}>
@@ -133,11 +138,11 @@
 
                                         <!-- <span class="cart__price end"  style="right: 90px;">جمع جزء </span> -->
                                         <span class="cart__price end"
-                                            > {{orderitem.total_price}} تومان</span>
+                                            > {{orderitem.total_price|intcomma:False}} تومان</span>
                                     </td>
 
                                 </tr>
-
+                                {% endwith %}
                                 {% endfor %}
                                 {% else %}
 
@@ -150,7 +155,7 @@
                             </tbody>
                         </table>
                         <div class="continue__shopping d-flex justify-content-between">
-                            <a class="continue__shopping--link" href="shop.html">بازگشت به صفحه محصولات</a>
+                            <a class="continue__shopping--link" href="{% url 'product_list' %}">بازگشت به صفحه محصولات</a>
                             <a class="continue__shopping--clear" href="{% url 'carts:cart_clean' %}">خالی کردن سبد
                                 خرید</a>
                         </div>
@@ -185,9 +190,9 @@
                                         <td class="cart__summary--amount text-right">$860.00</td>
                                     </tr> -->
                                     <tr class="cart__summary--total__list">
-                                        <td class="cart__summary--total__title text-left">جمع جزء </td>
+                                        <td class="cart__summary--total__title text-left">قیمت کل سفارشات</td>
                                         <td class="cart__summary--amount text-left"
-                                            style="position: absolute; left: 20px;"> {{cart.get_total_price}} تومان</td>
+                                            style="position: absolute; left: 20px;"> {{cart.get_total_price|intcomma:False}} تومان</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -195,9 +200,9 @@
                         <div class="cart__summary--footer">
                             <p class="cart__summary--footer__desc">
 
-                                هزینه بسته بندی و پست (15 تومان بسته بندی و 30 تومان پست) بارکد پستی در پیج استوری
-                                میشود:{% get_solo 'orders.Shiping_price' as shiping_price %}
-                                {{ shiping_price.shiping_price|intcomma:False }}تومان
+                                هزینه بسته بندی و پست {% get_solo 'orders.Shiping_price' as shiping_price %}
+                                {{ shiping_price.shiping_price|intcomma:False }}تومان <br> بارکد پستی در پیج استوری
+                                میشود
                             </p>
                             <form action="{% url 'order_create' %}" method="post">
                                 <ul class="d-flex justify-content-between">
@@ -234,7 +239,7 @@
                                     <td class="cart__table--body__list">
                                         <div class="cart__product d-flex align-items-center">
                                             <a class="cart__remove--btn"
-                                                href="{% url 'carts:cart_remove' product=orderitem.product_object.id color=orderitem.color size=orderitem.size  %}"
+                                                href="{% url 'carts:cart_remove' product=pro_obj.id color=orderitem.color size=orderitem.size  %}"
                                                 aria-label="search button" type="button">
                                                 <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 24 24" width="16px" height="16px">
@@ -244,12 +249,12 @@
                                             </a>
                                             <div class="cart__thumbnail" style="padding: 10px;">
                                                 <a href="product-details.html"><img class="border-radius-5"
-                                                        src="{{orderitem.product_object.image.first.image.url}}"
+                                                        src="{{pro_obj.image.first.image.url}}"
                                                         alt="cart-product"></a>
                                             </div>
                                             <div class="cart__content">
                                                 <h4 class="cart__content--title"><a
-                                                        href="product-details.html">{{orderitem.product_object.title}}</a>
+                                                        href="product-details.html">{{pro_obj.title}}</a>
                                                 </h4>
                                                 <span class="cart__content--variant">رنگ:
                                                     {{orderitem.color}}</span>
@@ -259,20 +264,20 @@
                                     </td>
                                     <td class="cart__table--body__list">
 
-                                        {% if orderitem.product_object.discount %}
+                                        {% if pro_obj.discount %}
 
                                         <span
-                                            class="cart__price">{{orderitem.product_object.price |custom_add:orderitem.product_object.discount.discount|intcomma:False|to_persian}}
+                                            class="cart__price">{{pro_obj.price |custom_add:pro_obj.discount.discount|intcomma:False|to_persian}}
                                             تومان</span>
                                         {% else %}
                                         <span
-                                            class="cart__price">{{orderitem.product_object.price|intcomma:False|to_persian}}
+                                            class="cart__price">{{pro_obj.price|intcomma:False|to_persian}}
                                             تومان</span>
                                         {% endif %}
 
                                     </td>
                                     <td class="cart__table--body__list">
-                                        <form action="{% url 'carts:cart_add' orderitem.product_object.id %}"
+                                        <form action="{% url 'carts:cart_add' pro_obj.id %}"
                                             method="post">
                                             {% csrf_token %}
                                             <input type="hidden" name="color" value={{orderitem.color}}>

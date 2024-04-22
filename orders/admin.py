@@ -1,23 +1,22 @@
+
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
+from django.shortcuts import render
 from django.urls import reverse
 from django.utils.http import urlencode
 from django.utils.html import format_html
+
 from products.models import Category
-from .models import order,order_item,Province,Customer
+from .models import order,order_item,Province
 from solo.admin import SingletonModelAdmin
 from orders.models import Shiping_price
 from jalali_date import datetime2jalali, date2jalali
 from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin	
-    
+from django.utils.translation import gettext as _
+
 
 admin.site.register(Shiping_price, SingletonModelAdmin)
-
-
-
-
-
 
 class orderInLine(admin.TabularInline):
     readonly_fields=['order','product','size','color','quantity','price','total_price']
@@ -33,21 +32,43 @@ class orderAdmin(ModelAdmin):
     inlines=[
         orderInLine,
     ]
-    autocomplete_fields=['province','customer']
+    list_select_related=['province']
+    autocomplete_fields=['province','user']
     list_filter=['order_status','datetime_order','peyment_status']
     list_editable=['order_status']
+    actions=['update_to_posted','update_to_pre','print_post_label']
+  
     
     @admin.display(description='تاریخ سفارش', ordering='datetime_order')
     def get_created_jalali(self, obj):
 	    return datetime2jalali(obj.datetime_order).strftime('%Y/%m/%d %H:%M:%S')
-
+ 
+ 
+    @admin.action(description=_('update status orders to  POSTED'))
+    def update_to_posted(self,request,queryset):
+        u_c=queryset.update(order_status='ارسال شده')
+        self.message_user(
+            request,
+            f' وضعیت {u_c} سفارش به حالت ارسال شده بروزرسانی شد'
+        )
+    @admin.action(description='بروزرسانی وضعیت سفارشات به در حال آماده سازی')
+    def update_to_pre(self,request,queryset):
+        u_c=queryset.update(order_status='در حال آماده سازی')
+        self.message_user(
+            request,
+            f' وضعیت {u_c} سفارش به در "حال آماده سازی" بروزرسانی شد'
+        )
+    @admin.action(description='لیبل های سفارشات انتخابات')
+    def print_post_label(self,request,queryset):
+      
+        return render(request,'orders/post_labels.html',context={
+        'query':queryset
+    })
 @admin.register(order_item)
 class Orderitem(ModelAdmin):
     list_display=['product','size','color','price','quantity','order_link']
-    # list_select_related=['product','product__product']
+
     autocomplete_fields=['product']
-    # def product_title(self,order:order_item):
-    #     return order.product.product.title
 
     @admin.display(ordering='customer__id')
     def order_link(self,order_item:order_item):
@@ -67,26 +88,26 @@ class ProvinceAdmin(ModelAdmin):
     list_display=['name']
     search_fields=['name']
     
-class customerOrderInline(admin.StackedInline):
-    readonly_fields=['first_name','last_name','province','city','order_status','peyment_status','datetime_order']
-    model=order
-    extra=0
-@admin.register(Customer)
-class CustomerAdmin(ModelAdmin):
+# class customerOrderInline(admin.StackedInline):
+#     readonly_fields=['first_name','last_name','province','city','order_status','peyment_status','datetime_order']
+#     model=order
+#     extra=0
+# @admin.register(Customer)
+# class CustomerAdmin(ModelAdmin):
     
-    user_model=settings.AUTH_USER_MODEL
-    inlines=[
-        customerOrderInline,
-    ]
-    list_select_related=['user']
-    list_display=['user','first_name','last_name','email']
-    search_fields=['user__username','phone_number','user__email']
-    @admin.display(ordering='user__first_name')
-    def first_name(self,customer:Customer):
-        return customer.user.first_name
-    @admin.display(ordering='user__last_name')
-    def last_name(self,customer:Customer):
-        return customer.user.last_name
-    @admin.display(ordering='user__email')
-    def email(self,customer:Customer):
-        return customer.user.email
+#     user_model=settings.AUTH_USER_MODEL
+#     inlines=[
+#         customerOrderInline,
+#     ]
+#     list_select_related=['user']
+#     list_display=['user','first_name','last_name','email']
+#     search_fields=['user__username','phone_number','user__email']
+#     @admin.display(ordering='user__first_name')
+#     def first_name(self,customer:Customer):
+#         return customer.user.first_name
+#     @admin.display(ordering='user__last_name')
+#     def last_name(self,customer:Customer):
+#         return customer.user.last_name
+#     @admin.display(ordering='user__email')
+#     def email(self,customer:Customer):
+#         return customer.user.email

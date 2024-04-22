@@ -6,6 +6,10 @@
 
 
 
+{% block title %}
+    {{product.title}}
+{% endblock title %}
+    
 
 {% block content %}
 
@@ -105,7 +109,7 @@
                     <h2 class="product__details--info__title mb-15">{{product.title}}</h2>
                     <div class="product__details--info__price mb-10">
                         {% if product.discount %}
-                        <span class="old__price">{{product.price|intcomma:False|to_persian}}</span>
+                        <span class="old__price">{{product.price|intcomma:False|to_persian}} تومان</span>
                         <span class="price__divided"></span>
                         <b><span class="currency">{{ product.price|custom_add:product.discount.discount|intcomma:False|to_persian }} تومان</span></b>
                         
@@ -248,148 +252,23 @@
         <div class="row row-cols-1">
             <div class="col">
                 <ul class="product__details--tab d-flex mb-30">
-                    <li class="product__details--tab__list active" data-toggle="tab" data-target="#description">
-                        مشخصات</li>
-                    <li class="product__details--tab__list" data-toggle="tab" data-target="#guid_size"> راهنمای سایز</li>
+                   
+                    <li class="product__details--tab__list active" data-toggle="tab" data-target="#guid_size">مشخصات و راهنمای سایز</li>
                 </ul>
                 <div class="product__details--tab__inner border-radius-10">
-                    <div class="tab_content">
-                        <div id="description" class="tab_pane active show">
+                    
+                        
+                        
                             <div class="product__tab--content">
                                 <div class="product__tab--content__step mb-30">
-                                    <h2 class="product__tab--content__title h4 mb-10">Nam provident sequi</h2>
-                                    <p class="product__tab--content__desc">Lorem ipsum dolor sit, amet consectetur
-                                        adipisicing elit. Nam provident sequi, nemo sapiente culpa nostrum rem eum
-                                        perferendis quibusdam, magnam a vitae corporis! Magnam enim modi, illo harum
-                                        suscipit tempore aut dolore doloribus deserunt voluptatum illum, est porro?
-                                        Ducimus dolore accusamus impedit ipsum maiores, ea iusto temporibus numquam
-                                        eaque mollitia fugiat laborum dolor tempora eligendi voluptatem quis
-                                        necessitatibus nam ab?</p>
-                                </div>
-                                <div class="product__tab--content__step">
-                                    <h4 class="product__tab--content__title mb-10">جزییات بیشتر</h4>
-                                    <ul>
-                                        <li class="product__tab--content__list">
-                                            <svg class="product__tab--content__list--icon"
-                                                xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
-                                                viewBox="0 0 512 512">
-                                                <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="48"
-                                                    d="M268 112l144 144-144 144M392 256H100"></path>
-                                            </svg>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam,
-                                            dolorum?
-                                        </li>
-                                        <li class="product__tab--content__list">
-                                            <svg class="product__tab--content__list--icon"
-                                                xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
-                                                viewBox="0 0 512 512">
-                                                <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="48"
-                                                    d="M268 112l144 144-144 144M392 256H100"></path>
-                                            </svg>
-                                            Magnam enim modi, illo harum suscipit tempore aut dolore?
-                                        </li>
-                                        <li class="product__tab--content__list">
-                                            <svg class="product__tab--content__list--icon"
-                                                xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
-                                                viewBox="0 0 512 512">
-                                                <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="48"
-                                                    d="M268 112l144 144-144 144M392 256H100"></path>
-                                            </svg>
-                                            Numquam eaque mollitia fugiat laborum dolor tempora;
-                                        </li>
-                                        <li class="product__tab--content__list">
-                                            <svg class="product__tab--content__list--icon"
-                                                xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
-                                                viewBox="0 0 512 512">
-                                                <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="48"
-                                                    d="M268 112l144 144-144 144M392 256H100"></path>
-                                            </svg>
-                                            Sit amet consectetur adipisicing elit. Quo delectus repellat facere maiores.
-                                        </li>
-                                        <li class="product__tab--content__list">
-                                            <svg class="product__tab--content__list--icon"
-                                                xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
-                                                viewBox="0 0 512 512">
-                                                <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="48"
-                                                    d="M268 112l144 144-144 144M392 256H100"></path>
-                                            </svg>
-                                            Repellendus itaque sit quia consequuntur, unde veritatis. dolorum?
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="guid_size" class="tab_pane">
-                            <div class="product__tab--content">
-                                <div class="product__tab--content__step mb-30">
-                                    <h2 class="product__tab--content__title h4 mb-10">Nam provident sequi</h2>
+                                    <h2 class="product__tab--content__title h4 mb-10"> راهنمای سایز</h2>
                                     <p class="product__tab--content__desc">{{product.des|safe}}</p>
                                 </div>
-                                <!-- <div class="product__tab--content__step">
-                                    <h4 class="product__tab--content__title mb-10">More Details</h4>
-                                    <ul>
-                                        <li class="product__tab--content__list">
-                                            <svg class="product__tab--content__list--icon"
-                                                xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
-                                                viewBox="0 0 512 512">
-                                                <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="48"
-                                                    d="M268 112l144 144-144 144M392 256H100"></path>
-                                            </svg>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam,
-                                            dolorum?
-                                        </li>
-                                        <li class="product__tab--content__list">
-                                            <svg class="product__tab--content__list--icon"
-                                                xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
-                                                viewBox="0 0 512 512">
-                                                <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="48"
-                                                    d="M268 112l144 144-144 144M392 256H100"></path>
-                                            </svg>
-                                            Magnam enim modi, illo harum suscipit tempore aut dolore?
-                                        </li>
-                                        <li class="product__tab--content__list">
-                                            <svg class="product__tab--content__list--icon"
-                                                xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
-                                                viewBox="0 0 512 512">
-                                                <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="48"
-                                                    d="M268 112l144 144-144 144M392 256H100"></path>
-                                            </svg>
-                                            Numquam eaque mollitia fugiat laborum dolor tempora;
-                                        </li>
-                                        <li class="product__tab--content__list">
-                                            <svg class="product__tab--content__list--icon"
-                                                xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
-                                                viewBox="0 0 512 512">
-                                                <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="48"
-                                                    d="M268 112l144 144-144 144M392 256H100"></path>
-                                            </svg>
-                                            Sit amet consectetur adipisicing elit. Quo delectus repellat facere maiores.
-                                        </li>
-                                        <li class="product__tab--content__list">
-                                            <svg class="product__tab--content__list--icon"
-                                                xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
-                                                viewBox="0 0 512 512">
-                                                <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="48"
-                                                    d="M268 112l144 144-144 144M392 256H100"></path>
-                                            </svg>
-                                            Repellendus itaque sit quia consequuntur, unde veritatis. dolorum?
-                                        </li>
-                                    </ul>
-                                </div> -->
+                                
                             </div>
-                        </div>
                         
-                    </div>
+                        
+                    
                 </div>
             </div>
         </div>
@@ -453,22 +332,22 @@
                                     {% if product.discount or product.category.discount %}
                                     {% if product.category.discount %}
 
-                                    <span class="old__price">{{product.price|intcomma:False|to_persian}}</span>
+                                    <span class="old__price">{{product.price|intcomma:False|to_persian}} تومان</span>
                                     <span class="price__divided"></span>
                                     <span
-                                        class="current__price">{{ product.price|custom_add:product.category.discount.discount|intcomma:False|to_persian }}</span>
+                                        class="current__price">{{ product.price|custom_add:product.category.discount.discount|intcomma:False|to_persian }} تومان</span>
 
 
                                     {% else %}
-                                    <span class="old__price">{{product.price}|intcomma:False|to_persian}</span>
+                                    <span class="old__price">{{product.price|intcomma:False|to_persian}} تومان</span>
                                     <span class="price__divided"></span>
                                     <span
-                                        class="current__price">{{ product.price|custom_add:product.discount.discount|intcomma:False|to_persian }}</span>
+                                        class="current__price">{{ product.price|custom_add:product.discount.discount|intcomma:False|to_persian }} تومان</span>
 
                                     {% endif %}
                                     {% else %}
 
-                                    <span class="current__price">{{product.price|intcomma:False|to_persian}} نومان</span>
+                                    <span class="current__price">{{product.price|intcomma:False|to_persian}} تومان</span>
 
 
                                     {% endif %}
@@ -507,7 +386,7 @@
                                             <li class="product__items--action__list">
 
                                                 <a class=" product__items--action__btn"
-                                                    href="{% url 'wishlist' %}">
+                                                    href="{% url 'wishlist_add' product.id %}">
                                                     <svg class="product__items--action__btn--svg"
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         width="25.51" height="23.443"

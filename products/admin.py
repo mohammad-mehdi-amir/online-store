@@ -5,10 +5,9 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
 from orders.models import order_item
-from django.db.models import Count,Sum
+from django.db.models import Count,Sum,F
+from django.utils.translation import gettext as _
 class PropertyInline(admin.TabularInline):
-    '''Tabular Inline View for Property'''
-
     model = Property
     extra = 0
     
@@ -18,43 +17,47 @@ class PropertyInline(admin.TabularInline):
 class ProductAdmin(ModelAdmin):
     list_display = ['first_img', 'title', 'price', 'category', 'number','num_sell']
     list_select_related = ['category']
+    list_prefetch_related = ('propertes','image')
     list_filter = ['datetime_add',]
     list_display_links = ['first_img', 'title']
     search_fields = ['title',]
     inlines = [PropertyInline]
     autocomplete_fields = ['image', 'category']
+    actions=['update_to_posted']
+    # prepopulated_fields={
+    #     'slg':['title',]
+    # }
 
     def category(self, product: Product):
         return product.category.title
 
-    @admin.display( description='تعداد موجودی')
-    def number(self, product_obj: Product):
-        pro = Property
-        all_pro = pro.objects.filter(product=product_obj)
-        sum = 0
-        for item in all_pro:
-            sum += item.number
-        return sum
     @admin.display(description='عکس محصول')
     def first_img(self, product: Product):
-        images = product.image
-        f_img = images.first().image.url
+        
+        f_img = product.image.first().image.url
         return format_html('<img src="{}" style="max-width:100px; max-height:100px ; border-radius: 20%;"/>'.format(f_img))
     
-    @admin.display(description='تعداد فروش تا حالا')
-    def num_sell(self,proudct:Product):
-
-        
-        q=Product.objects.get(id=proudct.id).order_item.aggregate(Sum('quantity'))
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        queryset = queryset.annotate(number_sell=Sum(F('order_item__quantity')))
+       
+        return queryset
     
-        
-            
-        return 0 if q['quantity__sum'] == None else q['quantity__sum']
-        
+    
+    @admin.display( description='تعداد موجودی')
+    def number(self, product_obj: Product):
+        pro = product_obj.propertes.all()
+        return sum(item.number for item in pro)
+       
+    
+    
 
+    @admin.display(description='تعداد فروش تا حالا',ordering='number_sell')
+    def num_sell(self,proudct:Product):
+        return proudct.number_sell
 
 class ProductInline(admin.StackedInline):
-
+    
     model = Product
     extra = 0
     can_delete = False
@@ -100,8 +103,8 @@ class slideAdmin(admin.ModelAdmin):
     def image_tag(self, obj):
         return format_html('<img src="{}" style="max-width:100px; max-height:100px; border-radius: 20%;"/>'.format(obj.image.url))
 
-    list_display = ['image_tag', 'title']
-    search_fields = ['title']
+    list_display = ['image_tag', 'title','category']
+    
 
 
 

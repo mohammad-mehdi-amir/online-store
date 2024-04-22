@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+
+MODE='2'
+
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +30,7 @@ SECRET_KEY = 'django-insecure-gl22_9!23fr+hgxw%xa2p6t#k60t6j%zvs6%4autn^)8m!k-iw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1',]
 
 
 INTERNAL_IPS = [
@@ -64,9 +69,24 @@ INSTALLED_APPS = [
     'solo',
    
 
-]
 
-MIDDLEWARE = [
+
+
+]
+if MODE!='1':
+    MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
+    ]
+else:
+     MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -76,7 +96,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     # "allauth.account.middleware.AccountMiddleware",
-]
+    ]
+        
 
 ROOT_URLCONF = 'config.urls'
 
@@ -103,7 +124,8 @@ TEMPLATES = [
     },
 ]
 #############################
-WSGI_APPLICATION = 'config.wsgi.application'
+if MODE!='1':
+    WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
@@ -111,8 +133,21 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
 
-    
-    'default': {
+}
+if MODE!='1':
+    DATABASES={
+         'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432
+    }
+    }
+else:
+    DATABASES={
+            'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'torento',
         'USER': 'root',
@@ -122,22 +157,9 @@ DATABASES = {
         
       }
     
+    }
     
     
-    
-    #   'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'postgres',
-    #     'USER': 'postgres',
-    #     'PASSWORD': 'postgres',
-    #     'HOST': 'db',
-    #     'PORT': 5432
-    # }
-
-
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -238,15 +260,22 @@ STATIC_ROOT=BASE_DIR.joinpath('staticfiles')
 
 
 #zarinpal config
-MERCHANT = "00000000-0000-0000-0000-000000000000"
-SANDBOX = True
+MERCHENT_KEY='0000-0000-0000-0000'
 
 
 
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
 # SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
-
+# if MODE!='1':
+#     SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+# else:
+#     SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+    
+    
+    
 #jalali date
+
+
 
 # default settings (optional)
 JALALI_DATE_DEFAULTS = {
@@ -276,3 +305,11 @@ JALALI_DATE_DEFAULTS = {
 }
 
 # LANGUAGE_CODE = 'fa'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'toronto7.shop@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'ufegvucmzwxdkfbw'

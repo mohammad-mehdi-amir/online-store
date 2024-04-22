@@ -43,8 +43,9 @@
   1. Base CSS
 */
 :root {
+  --my-color: #e15e00;
   --primary-color: #061738;
-  --secondary-color: #bd2717;
+  --secondary-color:#f9750a;
   --yellow-color: #ffc107;
   --text-gray-color: #606060;
   --white-color: #ffffff;
@@ -2565,7 +2566,7 @@ body.overlay__active::before,
   position: fixed;
   width: 100%;
   top: 0;
-  background:#930d03;
+  background:var(--my-color);
   left: 0;
   z-index: 99;
   padding: 1.5rem 0;
@@ -2914,20 +2915,20 @@ body.overlay__active::before,
 
 .main__header {
   padding: 1.2rem 0;
-  background:#930d03;
+  background:var(--my-color);
 }
 
 @media only screen and (min-width: 768px) {
   .main__header {
     padding: 1.5rem 0;
-    background:#930d03;
+    background:var(--my-color);
   }
 }
 
 @media only screen and (min-width: 992px) {
   .main__header {
     padding: 2rem 0;
-    background:#930d03;
+    background:var(--my-color);
   }
 }
 
@@ -3036,7 +3037,7 @@ body.overlay__active::before,
   border: 0;
   padding: 0 1.5rem;
   line-height: 2rem;
-  background:#930d03;
+  background:var(--my-color);
 }
 
 .header__search--button:hover {
@@ -6994,6 +6995,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .footer__widget--title {
+
   margin-bottom: 2rem;
   font-weight: 400;
   position: relative;

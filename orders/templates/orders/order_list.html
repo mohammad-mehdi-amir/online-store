@@ -77,10 +77,10 @@
                             <strong>سفارش</strong>
                             <span></span>
                             {% for order_item in item.items.all %}
-                            {{order_item.product.title}} <br>
+                             <a href="{{ order_item.product.get_absolute_url }}"> <b>{{order_item.product.title}} </b></a><br>
                                 
                             {% endfor %}</span>
-                                
+                                 
                         </td>
                         <td class="account__table--body__child--items">
                             <strong>تاریخ</strong>

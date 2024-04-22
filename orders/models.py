@@ -8,7 +8,7 @@ from django.conf import settings
 from jalali_date.fields import JalaliDateTimeField
 from products.models import Property,Product
 from solo.models import SingletonModel
-
+from django.shortcuts import redirect, render
 class Shiping_price(SingletonModel):
     shiping_price=models.PositiveIntegerField( default=45000)
     def __str__(self):
@@ -18,14 +18,6 @@ class Shiping_price(SingletonModel):
 
 
 
-class Customer(models.Model):
-    user=models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='customer')
-    # birht_date=models.DateField(null=True,blank=True,verbose_name=_(' birth date :'))
-    
-    def __str__(self):
-        return self.user.username
-    class Meta:
-        verbose_name_plural='مشتری ها'
 
 
 class Province(models.Model):
@@ -48,7 +40,7 @@ class Province(models.Model):
 class order(models.Model):
     PEYMENT_OPTIONS= [
         ('لغو شده','لغو شده'),
-        ('در انتظار','در انتظار'),
+        ('در انتظار تایید','در انتظار تایید'),
         ('پرداخت شده','پرداخت شده')
     ]
     ORDER_OPTIONS=[
@@ -56,8 +48,8 @@ class order(models.Model):
         ('در حال آماده سازی','در حال آماده سازی'),
         ('ارسال شده','ارسال شده')
     ]
-    customer=models.ForeignKey(Customer,on_delete=models.CASCADE,related_name='orders',null=True,verbose_name=_('customer :'))
-    phone_number=PhoneNumberField()
+    user=models.ForeignKey(get_user_model(),on_delete=models.CASCADE,related_name='orders',null=True,verbose_name=_('customer :'))
+    phone_number=PhoneNumberField(verbose_name=_('phone number :'))
     first_name=models.CharField(max_length=30,verbose_name=_('First Name :'))
     last_name=models.CharField(max_length=30,verbose_name=_('Last Name :'))
     
@@ -66,7 +58,7 @@ class order(models.Model):
     province=models.ForeignKey(Province,on_delete=models.CASCADE,null=True,related_name='orders',verbose_name=_('province :'))
     city=models.CharField(max_length=50,verbose_name=_('city :'))
     address=models.CharField(max_length=150,verbose_name=_('address :'))
-    postal_code=models.CharField(max_length=10,verbose_name=_('postal code :'))
+    postal_code=models.CharField(max_length=10,verbose_name=_('postal code :'),null=True,blank=True)
     
     
     datetime_order=models.DateTimeField(auto_now_add=True)
@@ -74,24 +66,27 @@ class order(models.Model):
     
     
     # is_payed=models.BooleanField(default=False)
-    peyment_status=models.CharField(max_length=50,choices=PEYMENT_OPTIONS,null=True,default='waiting')
-    order_status =models.CharField(max_length=50,choices=ORDER_OPTIONS,null=True,default='confirming')
+    peyment_status=models.CharField(max_length=50,choices=PEYMENT_OPTIONS,null=True,default='waiting',verbose_name=_('peyment_status :'))
+    order_status =models.CharField(max_length=50,choices=ORDER_OPTIONS,null=True,default='confirming',verbose_name=_('order_status :'))
     
     order_note=models.TextField(blank=True,verbose_name=_('Do You Have Any Note For This Order?'))
     
     
-    total_price=models.PositiveIntegerField(null=True,blank=True)
+    total_price=models.PositiveIntegerField(null=True,blank=True,verbose_name=_('total order price:'))
 
-    zarinpal_authority = models.CharField(max_length=225,blank=True)
+    zarinpal_authority = models.CharField(max_length=225,blank=True,verbose_name=_(' zarinpal authority code:'))
     
     
     
     
     def __str__(self):
-        return f'{self.id}-{self.customer}'
+        return f'{self.id} {self.first_name} {self.last_name}'
     class Meta:
         verbose_name_plural ='سفارشات'
     
+    
+    
+
 class order_item(models.Model):
     order=models.ForeignKey(order,on_delete=models.CASCADE,related_name='items')
     

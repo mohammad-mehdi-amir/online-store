@@ -6,6 +6,7 @@ urlpatterns = [
     path('create/',order_create,name='order_create'),
     path('orders/',OrderListView.as_view(),name='order_list'),
 
+
     
 
 ]
