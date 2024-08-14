@@ -33,7 +33,7 @@
                         <div class="slider__content">
                             <a class="banner__items--thumbnail position__relative"
                                 href="{% url 'category_list' item.category.id %}"><img style="padding: 20px; "
-                                    class="banner__items--thumbnail__img" src="{{item.image.url}}" alt="{{item.title}}">
+                                    class="banner__items--thumbnail__img" src="{{item.image.url}}" alt="{{item.title}}"  >
                                 <!-- <div class="banner__items--content" style="left: 100px; background-color: rgba(201, 201, 201, 0.822);">
                                     <span class="slider__text--shape__icon">{{item.title}}</span>
                                     <h2 class="slider__content--maintitle h1"><b> {{item.category.title}} </b></h2>
@@ -188,18 +188,9 @@
 
                                 {% for cat in Category %}
                                 <div class="col mb-30">
-                
-                                    <div class="col mb-30">
-                                        <div class="banner__items">
-                                            <a class="banner__items--thumbnail position__relative" href="{{cat.get_absolute_url}}"><img 
-                                                    class="banner__items--thumbnail__img"
-                                                    src="{{cat.image.url}}"
-                                                    alt="{{cat.title}}" style="border-radius: 10px;">
-                                                <div class="banner__items--content">
-                                                   
-                                                    <h2 class="banner__items--content__title h3">{{cat.title}} 
-                                                    </h2>
-                                                    <span class="banner__items--content__link">مشاهده
+                                    <center>
+                                        <h2 class="banner__items--content__title h3">{{cat.title}} </h2> 
+                                        <span class="banner__items--content__link">مشاهده
                                                         <svg class="banner__items--content__arrow--icon"
                                                             xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2"
                                                             viewBox="0 0 6.2 6.2">
@@ -208,6 +199,18 @@
                                                                 transform="translate(-4 -4)" fill="currentColor"></path>
                                                         </svg>
                                                     </span>
+                                                    </center>
+                                    <div class="col mb-30">
+                                        <div class="banner__items">
+                                            <a class="banner__items--thumbnail position__relative" href="{{cat.get_absolute_url}}"><img 
+                                                    class="banner__items--thumbnail__img"
+                                                    
+                                                    src="{{cat.image.url}}"
+                                                    alt="{{cat.title}}" style="border-radius: 10px;">
+                                                <div class="banner__items--content">
+                                                   
+                                                    
+                                                   
                                                 </div>
                                             </a>
                                         </div>
@@ -257,9 +260,11 @@
 
                                             <img class="product__items--img product__primary--img"
                                                 src="{{product.image.first.image.url}}" alt={{product.title}}
+                                                
                                                 style="border-radius: 5px;">
                                             <img class="product__items--img product__secondary--img"
                                                 src="{{product.image.all|get_sec }}" alt={{product.title}}
+                                                
                                                 style="border-radius: 5px;">
                                         </a>
 
@@ -298,7 +303,7 @@
                                                     href="{% url 'category_list' product.category.id %}">{{product.category}}</a></span>
 
                                             <h3 class="product__items--content__title h4"><a
-                                                    href="product-details.html">{{product.title}}</a></h3>
+                                                    href="{% url 'product_detail' product.id %}">{{product.title}}</a></h3>
                                             <div class="product__items--price">
 
                                                 {% if product.discount or product.category.discount %}

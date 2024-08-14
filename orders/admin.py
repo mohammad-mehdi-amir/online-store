@@ -8,7 +8,7 @@ from django.utils.http import urlencode
 from django.utils.html import format_html
 
 from products.models import Category
-from .models import order,order_item,Province
+from .models import order,order_item,Province,EmailQueue
 from solo.admin import SingletonModelAdmin
 from orders.models import Shiping_price
 from jalali_date import datetime2jalali, date2jalali
@@ -37,6 +37,7 @@ class orderAdmin(ModelAdmin):
     list_filter=['order_status','datetime_order','peyment_status']
     list_editable=['order_status']
     actions=['update_to_posted','update_to_pre','print_post_label']
+    readonly_fields=['peyment_status']
   
     
     @admin.display(description='تاریخ سفارش', ordering='datetime_order')
@@ -58,10 +59,10 @@ class orderAdmin(ModelAdmin):
             request,
             f' وضعیت {u_c} سفارش به در "حال آماده سازی" بروزرسانی شد'
         )
-    @admin.action(description='لیبل های سفارشات انتخابات')
+    @admin.action(description='لیبل های سفارشات ')
     def print_post_label(self,request,queryset):
       
-        return render(request,'orders/post_labels.html',context={
+        return render(request,'orders/post_labels.html ',context={
         'query':queryset
     })
 @admin.register(order_item)
@@ -111,3 +112,10 @@ class ProvinceAdmin(ModelAdmin):
 #     @admin.display(ordering='user__email')
 #     def email(self,customer:Customer):
 #         return customer.user.email
+
+@admin.register(EmailQueue)
+class EmailQueueAdmin(admin.ModelAdmin):
+    list_display = ('email', 'ready_to_send')  # نمایش فیلدها در لیست
+    list_filter = ('ready_to_send',)  # امکان فیلتر کردن براساس آماده بودن
+    search_fields = ('email',)  # امکان جستجو بر اساس ایمیل
+    actions = ['mark_as_ready', 'send_emails']  # اضافه کردن اکشن‌ها

@@ -77,7 +77,7 @@
                             <strong>سفارش</strong>
                             <span></span>
                             {% for order_item in item.items.all %}
-                             <a href="{{ order_item.product.get_absolute_url }}"> <b>{{order_item.product.title}} </b></a><br>
+                             <a href="{{ order_item.product.get_absolute_url }}"> <b>{{order_item.product.title}}({{order_item.color}})*{{order_item.size}} </b></a><br>
                                 
                             {% endfor %}</span>
                                  
@@ -88,7 +88,14 @@
                         </td>
                         <td class="account__table--body__child--items">
                             <strong>وضعیت پرداخت</strong>
-                            <span>{{item.peyment_status}}</span>
+                            
+                            {% if item.peyment_status %}
+                                <span>پرداخت موفق ✅</span>
+                                {% else %}
+                                <span>پرداخت ناموفق ❌</span>
+                            {% endif %}
+                                
+                        
                         </td>
                         <td class="account__table--body__child--items">
                             <strong>وضعیت سفارش</strong>

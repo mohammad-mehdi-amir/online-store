@@ -16,7 +16,7 @@
     </title>
     <meta name="enamad" content="3842101" />
     <meta name="google-site-verification" content="Laa8TTwPsGioNew3GdCnX1lQVphex9nlmCrTsG-UY7E" />
-    
+
     <meta name="description" content="در بوتیک تورنتو میتوانید انواع پوشاک مردانه پیدا کنید">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href=" {% static 'img/fav4.png' %} ">
@@ -265,7 +265,7 @@
 
                                 </li>
 
-                                
+
 
 
                             </ul>
@@ -360,7 +360,7 @@
                                 <li class="header__menu--items mega__menu--items">
                                     <a class="header__menu--link" href="{% url 'product_list' %}">فروشگاه
 
-                                        &nbsp;&nbsp;   &nbsp;&nbsp;   &nbsp;&nbsp; </a>
+                                        &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; </a>
 
 
                                 <li class="header__menu--items d-none d-xl-block">
@@ -386,13 +386,13 @@
                                 </li>
 
 
-                                
+
 
                             </ul>
                         </nav>
                     </div>
-                    <p class="header__discount--text"><img class="header__discount--icon__img"
-                            src="{% static 'img/icon/lamp.png' %} " alt="lamp-img"> تخفیف تا سقف ۶۰ ٪</p>
+                    <!-- <p class="header__discount--text"><img class="header__discount--icon__img"
+                            src="{% static 'img/icon/lamp.png' %} " alt="lamp-img"> تخفیف تا سقف ۶۰ ٪</p> -->
                 </div>
             </div>
         </div>
@@ -900,9 +900,8 @@
                         <ul>
                             <li><a referrerpolicy='origin' target='_blank'
                                     href='https://trustseal.enamad.ir/?id=480524&Code=B1wJts53232ggoOQC4kRVjj6LB0PZGda'><img
-                                        referrerpolicy='origin'
-                                        src='https://trustseal.enamad.ir/logo.aspx?id=480524&Code=B1wJts53232ggoOQC4kRVjj6LB0PZGda'
-                                        alt='' style='cursor:pointer' Code='B1wJts53232ggoOQC4kRVjj6LB0PZGda'></a></li>
+                                        referrerpolicy='origin' src="{%  static 'img/logo/enamad.png' %}"
+                                        alt='.' style='cursor:pointer' Code='B1wJts53232ggoOQC4kRVjj6LB0PZGda'></a></li>
                             <li class="margin-right10px">
                                 <script src="https://www.zarinpal.com/webservice/TrustCode"
                                     type="text/javascript"></script>
@@ -918,7 +917,7 @@
 
             <p class="copyright__content text-ofwhite m-0"> Copyright © 2024 &nbsp; تمامی مطالب این وبسایت متعلق به
                 فروشگاه <b><a class="copyright__content--link" href="">تورنتو</a></b> می باشد</p>
-            <p>طراحی ٫توسعه و اجرا توسط : <a target="_blank" href="https://t.me/weweremadeforanoutherworld">mohammad
+            <p>طراحی ٫توسعه و اجرا توسط : <a target="_blank" href="https://www.mohamadmehdi-amir.ir">mohammad
                     mehdi Amir</a> </p>
 
         </div>
@@ -941,6 +940,33 @@
 
     <!-- Customscript js -->
     <script src="{% static 'js/script.js' %} "></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                extraPlugins: [MyCustomPlugin],
+                language: 'fa',
+                // سایر تنظیمات CKEditor
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        function MyCustomPlugin(editor) {
+            editor.model.document.on('change:data', () => {
+                const content = editor.getData();
+                const updatedContent = content.replace(/<p>(.*?)<\/p>/g, (match, p1) => {
+                    if (/[\u0600-\u06FF]/.test(p1)) {
+                        return `<p class="rtl">${p1}</p>`;
+                    } else {
+                        return `<p class="ltr">${p1}</p>`;
+                    }
+                });
+                editor.setData(updatedContent);
+            });
+        }
+    </script>
+
 
 </body>
 

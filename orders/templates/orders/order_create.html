@@ -59,7 +59,7 @@
                                     <div class="product__image two  d-flex align-items-center">
                                         <div class="product__thumbnail border-radius-5">
                                             <a href="product-details.html"><img class="border-radius-5"
-                                                    src="{{pro_obj.image.first.image.url}}" alt="cart-product"></a>
+                                                    src="{{pro_obj.image.first.image.url}}" alt="cart-product"  ></a>
                                             <span class="product__thumbnail--quantity">{{item.quantity}}</span>
                                         </div>
                                         <div class="product__description">
@@ -285,7 +285,7 @@
                                     <div class="product__image two  d-flex align-items-center">
                                         <div class="product__thumbnail border-radius-5">
                                             <a href="product-details.html"><img class="border-radius-5"
-                                                    src="{{pro_obj.image.first.image.url}}" alt="cart-product"></a>
+                                                    src="{{pro_obj.image.first.image.url}}" alt="cart-product"  ></a>
                                             <span class="product__thumbnail--quantity">{{item.quantity}}</span>
                                         </div>
                                         <div class="product__description">
@@ -335,7 +335,8 @@
                             </tr>
                             <tr class="checkout__total--items">
                                 <td class="checkout__total--title text-left">هزینه بسته بندی و ارسال</td>
-                                <td class="checkout__total--calculated__text text-right" style="position: absolute ;left: 195px;">                                میشود:{% get_solo 'orders.Shiping_price' as shiping_price %}
+                                <td class="checkout__total--calculated__text text-right" style="position: absolute ;left: 195px;">
+                                    {% get_solo 'orders.Shiping_price' as shiping_price %}
                                     {{ shiping_price.shiping_price|intcomma:False }}تومان</td>
                             </tr>
                         </tbody>

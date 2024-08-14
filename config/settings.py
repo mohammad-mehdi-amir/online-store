@@ -1,3 +1,10 @@
+# from __future__ import absolute_import, unicode_literals
+from decouple import config
+from celery import Celery
+
+import os
+from dotenv import load_dotenv
+
 """
 Django settings for config project.
 
@@ -13,8 +20,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 
 
-MODE='2'
-
+MODE='1'
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -67,37 +73,26 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'crispy_forms',
     'solo',
+    'celery',
    
 
 
 
 
 ]
-if MODE!='1':
-    MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
-    ]
-else:
-     MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
-    # "allauth.account.middleware.AccountMiddleware",
-    ]
-        
+
+MIDDLEWARE = [
+'django.middleware.security.SecurityMiddleware',
+'django.contrib.sessions.middleware.SessionMiddleware',
+'django.middleware.common.CommonMiddleware',
+'django.middleware.csrf.CsrfViewMiddleware',
+'django.contrib.auth.middleware.AuthenticationMiddleware',
+'django.contrib.messages.middleware.MessageMiddleware',
+'django.middleware.clickjacking.XFrameOptionsMiddleware',
+"debug_toolbar.middleware.DebugToolbarMiddleware",
+"allauth.account.middleware.AccountMiddleware",
+]
+ 
 
 ROOT_URLCONF = 'config.urls'
 
@@ -146,18 +141,24 @@ if MODE!='1':
     }
     }
 else:
-    DATABASES={
-            'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'torento',
-        'USER': 'root',
-        'PASSWORD': '1744285721',
-        'HOST': 'localhost',
-        'PORT': 5432
+    # DATABASES={
+    #         'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'torento',
+    #     'USER': 'root',
+    #     'PASSWORD': '1744285721',
+    #     'HOST': 'localhost',
+    #     'PORT': 5432
         
-      }
+    #   }
     
+    # }
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
     
     
 # Password validation
@@ -305,11 +306,38 @@ JALALI_DATE_DEFAULTS = {
 }
 
 # LANGUAGE_CODE = 'fa'
+load_dotenv()
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'toronto7.shop@gmail.com'
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_USE_TLS =os.getenv('EMAIL_USE_TLS')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL=os.getenv('DEFAULT_FROM_EMAIL')
 
-EMAIL_HOST_PASSWORD = 'ufegvucmzwxdkfbw'
+# Load environment variables from .env file
+
+
+# متغیرهای محیطی
+RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', default='localhost')
+
+RABBITMQ_USER = os.getenv('RABBITMQ_USER', default='guest')
+RABBITMQ_PASSWORD = os.getenv('RABBITMQ_PASSWORD', default='guest')
+
+
+# RABBITMQ_HOST = 'localhost'
+RABBITMQ_PORT ='5672'
+# RABBITMQ_USER ='guest'
+# RABBITMQ_PASSWORD = 'guest'
+
+# # ساخت URL برای Celery broker
+CELERY_BROKER_URL = f'amqp://{RABBITMQ_USER}:{RABBITMQ_PASSWORD}@{RABBITMQ_HOST}:{RABBITMQ_PORT}//'
+
+# ایجاد شیء Celery
+app = Celery('config')
+
+# تنظیمات Celery
+app.conf.broker_url = CELERY_BROKER_URL
+# app.conf.broker_url = 'amqp://guest:guest@localhost:5672//'
+app.conf.result_backend = 'rpc://'

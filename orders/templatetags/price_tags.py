@@ -4,7 +4,8 @@ from orders.models import Shiping_price
 register = template.Library()
 
     
-SHIPING_PRICE=Shiping_price.objects.get().shiping_price
+# SHIPING_PRICE=Shiping_price.objects.get().shiping_price
+SHIPING_PRICE=45000
 
 
 @register.filter

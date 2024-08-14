@@ -1,5 +1,5 @@
 from products.models import Product, Property, Wishlist
-
+from orders.models import order
 # class Wishlist:
 #     def __init__(self, request):
 #         self.request = request
@@ -75,19 +75,25 @@ class Cart:
         product_id = str(product.id)
         label = str(product_id)+str(color)+str(size)
         # p_obj = Product.objects.get(id=product_id)
-        property_obj=Property.objects.get(product=product_id, color=color, size=s)
-        if property_obj.number >= 1 and property_obj.number >=quantity:
-            if (label in self.cart and size == self.cart[label]['size'] and color == self.cart[label]['color']):
-                if add_or_replace == 'on':
-                    self.cart[label]['quantity'] = quantity
-                else:
-                    self.cart[label]['quantity'] += quantity
+        property_obj=Property.objects.get(product=product_id, color1=color, size=s)
+        if property_obj.number !=0 :
+            if property_obj.number >=quantity :
+                
+                if (label in self.cart and size == self.cart[label]['size'] and color == self.cart[label]['color']):
+                    if add_or_replace == 'on':
+                        self.cart[label]['quantity'] = quantity
+                    else:
+                        self.cart[label]['quantity'] += quantity
 
+                else:
+                    self.cart[label] = {'product': product_id, 'quantity': quantity, 'color': str(
+                        color), 'size': str(size)}
+                self.save()
             else:
-                self.cart[label] = {'product': product_id, 'quantity': quantity, 'color': str(
-                    color), 'size': str(size)}
-            self.save()
+                print('---------------------------------------------------------')
+                raise order.NotEnoughException(property_obj.number)
         else:
+            print('-------',property_obj.number,'----',quantity )
             raise Property.DoesNotExist
 
     def remove(self, product_id, color, size):
@@ -111,11 +117,11 @@ class Cart:
                     float(pro.price)-float(pro.price)*pro.discount.discount)
             else:
                 product_price = pro.price
-            if pro.propertes.get(color= cart[item]['color'],size= cart[item]['size']).number < cart[item]['quantity']:
+            if pro.propertes.get(color1= cart[item]['color'],size= cart[item]['size']).number < cart[item]['quantity']:
                 cart[item]['quantity']=1
 
                 
-            if pro.propertes.get(color= cart[item]['color'],size= cart[item]['size']).number ==0:
+            if pro.propertes.get(color1= cart[item]['color'],size= cart[item]['size']).number ==0:
                 self.remove(pro.id,cart[item]['color'],cart[item]['size'])
                 
 
@@ -138,11 +144,7 @@ class Cart:
         for item in self.cart.values():
             product_ids.append(item['product'])
 
-        products = []
-        for item in product_ids:
-            products.append(Product.objects.get(id=item))
 
-        # return sum(item['quantity']*item['product_object'].price for item in self.cart.values())
         s = 0
         for item in self.cart.values():
             product_obj= Product.objects.select_related('category','discount').get(id=int(item['product']))

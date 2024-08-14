@@ -53,32 +53,28 @@
 
 
                             {% for item in images %}
-
+                            
                             <div class="swiper-slide">
                                 <div class="product__media--preview__items">
-                                    <a class="product__media--preview__items--link glightbox"
-                                        data-gallery="product-media-preview" href="{{item.image.url}}"><img
-                                            class="product__media--preview__items--img" src="{{item.image.url}}"
+                                    <a class="product__media--preview__items--link glightbox" data-gallery="product-media-preview"
+                                        href="{{item.image.url}}"><img class="product__media--preview__items--img" src="{{item.image.url}}"
                                             alt="{{item.title}}"></a>
                                     <div class="product__media--view__icon">
                                         <a class="product__media--view__icon--link glightbox" href="{{item.image.url}}"
                                             data-gallery="product-media-preview">
-                                            <svg class="product__media--view__icon--svg"
-                                                xmlns="http://www.w3.org/2000/svg" width="22.51" height="22.443"
-                                                viewBox="0 0 512 512">
-                                                <path
-                                                    d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
-                                                    fill="none" stroke="currentColor" stroke-miterlimit="10"
-                                                    stroke-width="32"></path>
-                                                <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                    stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448">
+                                            <svg class="product__media--view__icon--svg" xmlns="http://www.w3.org/2000/svg" width="22.51"
+                                                height="22.443" viewBox="0 0 512 512">
+                                                <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none"
+                                                    stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
+                                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+                                                    stroke-width="32" d="M338.29 338.29L448 448">
                                                 </path>
                                             </svg>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-
+                            
                             {% endfor %}
 
                         </div>
@@ -91,7 +87,7 @@
                             <div class="swiper-slide">
                                 <div class="product__media--nav__items">
                                     <img class="product__media--nav__items--img" src="{{item.image.url}}"
-                                        alt="product-nav-img">
+                                        alt="product-nav-img"  >
                                 </div>
                             </div>
                             {% endfor %}
@@ -107,7 +103,9 @@
                 <div class="product__details--info">
 
                     <h2 class="product__details--info__title mb-15">{{product.title}}</h2>
-                    <div class="product__details--info__price mb-10">
+                    
+                    {% if product.status %}
+                      <div class="product__details--info__price mb-10">
                         {% if product.discount %}
                         <span class="old__price">{{product.price|intcomma:False|to_persian}} تومان</span>
                         <span class="price__divided"></span>
@@ -188,10 +186,18 @@
                             </svg>
 
                         </a>
-                        <button type="submit" class="variant__buy--now__btn primary__btn">استعلام موجودی و اضافه به سبد خرید</button>
+                        <button type="submit" class="variant__buy--now__btn primary__btn">اضافه به سبد خرید</button>
 
                     </form>
+                    {% else %}
+                    <div class="product__details--info__price mb-10">
+                        <h3><span class="currency">اتمام موجودی</span></h3>
+                    </div>
 
+  
+                    {% endif %}
+                        
+                    
 
 
 
@@ -231,7 +237,7 @@
                                 {% endfor %}
                             </span>
                         </p>
-                        <p class="product__details--info__meta--list"><strong>دصته بندی :</strong>
+                        <p class="product__details--info__meta--list"><strong>دسته بندی :</strong>
                             <span>{{product.category}}</span>
                         </p>
                     </div>
@@ -291,11 +297,11 @@
                         <div class="product__items--thumbnail">
                             <a class="product__items--link" href="{% url 'product_detail' product.id %}">
                                 <img class="product__items--img product__primary--img"
-                                    src={{product.image.first.image.url}} alt="product-img">
+                                    src={{product.image.first.image.url}} alt="product-img"  >
                                 <img class="product__items--img product__secondary--img"
-                                    src={{product.image.all|get_sec }} alt="product-img">
+                                    src={{product.image.all|get_sec}} alt="product-img"  >
                             </a>
-                            {% if product.status == True %}
+                            {% if product.status %}
 
                             {% if product.discount or product.category.discount %}
 
@@ -329,6 +335,11 @@
                                         href="{% url 'product_detail' product.id %}">{{product.title}}</a></h3>
                                 <span class="product__items--content__subtitle">{{product.category}}</span>
                                 <div class="product__items--price">
+                                    
+                                    {% if product.status %}
+                                        
+                                        
+
                                     {% if product.discount or product.category.discount %}
                                     {% if product.category.discount %}
 
@@ -351,6 +362,12 @@
 
 
                                     {% endif %}
+                                    {% else %}
+                                    <span class="current__price">اتمام موجودی</span>
+
+
+                                    {% endif %}
+
                                 </div>
 
                                 <div>

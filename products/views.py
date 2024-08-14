@@ -101,8 +101,8 @@ class DeatilProductView(generic.DeleteView):
             if item.size not in size_list :
                    size_list.append(str(item.size))
                    
-            if item.color not in color_list :
-                color_list.append(str(item.color))
+            if item.color1 not in color_list :
+                color_list.append(str(item.color1))
                 
         context['size']=size_list
         context['color']=color_list
@@ -161,7 +161,7 @@ def remove_from_wishlist(request,pk):
     
     Wishlist.objects.get(
         product=product_obj,
-        user=get_user_model(),
+        user=request.user.id,
     ).delete()
 
     return redirect('wishlist')

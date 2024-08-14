@@ -1,5 +1,6 @@
 from typing import Any
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from .forms import AddOrderForm
 from carts.cart import Cart
 from.models import order_item
@@ -9,7 +10,8 @@ from django.utils.translation import gettext as _
 from django.contrib.auth.decorators import login_required
 from . models import order,Shiping_price
 from products.models import Product
-
+from django.core.mail import send_mail
+from .tasks import send_order_email
 @login_required
 def order_create(request):
     cart=Cart(request)
@@ -44,11 +46,12 @@ def order_create(request):
                     
                     
                     request.session['order_id'] = order_obj.id
+                  
                     return redirect('peyment_request')
                 
                 
                 except Exception as e:
-                   
+                    print(e,'-------------------------')
                     messages.error(request,_('please try again'))
                     last_order_info=1
             else:

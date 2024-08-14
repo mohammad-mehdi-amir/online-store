@@ -1,19 +1,20 @@
 {
     "platform": "django",
-    "app": "toronto",
+    "app": "toronto-onlineshop",
     "django": {
         "mirror": false
     },
     "disks": [
         {
-            "name": "static-disk",
-            "mountTo": "staticfiles"
-        },
-        {
-            "name": "media-disk",
-            "mountTo": "media"
+          "name": "media-disk",
+          "mountTo": "media"
         }
-    ],
+        ,
+        {
+            "name":"static-disk",
+            "mountTo":"staticfiles"
+        }
+      ],
      "build": {
         "location": "germany"
      }

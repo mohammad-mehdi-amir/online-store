@@ -38,16 +38,14 @@ class Province(models.Model):
     
     
 class order(models.Model):
-    PEYMENT_OPTIONS= [
-        ('لغو شده','لغو شده'),
-        ('در انتظار تایید','در انتظار تایید'),
-        ('پرداخت شده','پرداخت شده')
-    ]
-    ORDER_OPTIONS=[
-        ('در انتظار تایید','در انتظار تایید'),
-        ('در حال آماده سازی','در حال آماده سازی'),
-        ('ارسال شده','ارسال شده')
-    ]
+
+
+    ORDER_OPTIONS = [
+    ('در انتظار تایید', 'در انتظار تایید'),
+    ( 'در حال آماده سازی', 'در حال آماده سازی'),
+    ( 'ارسال شده', 'ارسال شده')
+]
+
     user=models.ForeignKey(get_user_model(),on_delete=models.CASCADE,related_name='orders',null=True,verbose_name=_('customer :'))
     phone_number=PhoneNumberField(verbose_name=_('phone number :'))
     first_name=models.CharField(max_length=30,verbose_name=_('First Name :'))
@@ -66,8 +64,8 @@ class order(models.Model):
     
     
     # is_payed=models.BooleanField(default=False)
-    peyment_status=models.CharField(max_length=50,choices=PEYMENT_OPTIONS,null=True,default='waiting',verbose_name=_('peyment_status :'))
-    order_status =models.CharField(max_length=50,choices=ORDER_OPTIONS,null=True,default='confirming',verbose_name=_('order_status :'))
+    peyment_status=models.BooleanField(default=False,verbose_name=_('peyment_status :'))
+    order_status =models.CharField(max_length=50,choices=ORDER_OPTIONS,null=True,default='در انتظار تایید',verbose_name=_('order_status :'))
     
     order_note=models.TextField(blank=True,verbose_name=_('Do You Have Any Note For This Order?'))
     
@@ -75,6 +73,10 @@ class order(models.Model):
     total_price=models.PositiveIntegerField(null=True,blank=True,verbose_name=_('total order price:'))
 
     zarinpal_authority = models.CharField(max_length=225,blank=True,verbose_name=_(' zarinpal authority code:'))
+    class NotEnoughException(Exception):
+        def __init__(self, number):
+            self.number = number
+
     
     
     
@@ -107,5 +109,15 @@ class order_item(models.Model):
     
     
     
-    
+# order/models.py
+
+from django.db import models
+
+class EmailQueue(models.Model):
+    email = models.EmailField(verbose_name="ایمیل")
+    ready_to_send = models.BooleanField(default=False, verbose_name="آماده برای ارسال")
+
+    def __str__(self):
+        return self.email
+
     

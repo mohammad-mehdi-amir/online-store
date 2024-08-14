@@ -192,7 +192,7 @@
                                     <tr class="cart__summary--total__list">
                                         <td class="cart__summary--total__title text-left">قیمت کل سفارشات</td>
                                         <td class="cart__summary--amount text-left"
-                                            style="position: absolute; left: 20px;"> {{cart.get_total_price|intcomma:False}} تومان</td>
+                                            style="position: absolute; left: 20px;"> {{cart.get_total_price|apply_shiping_price|intcomma:False}} تومان</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -322,7 +322,7 @@
                             </tbody>
                         </table>
                         <div class="continue__shopping d-flex justify-content-between">
-                            <a class="continue__shopping--link" href="shop.html">بازگشت به صفحه محصولات</a>
+                            <a class="continue__shopping--link" href="{% url 'product_list' %}">بازگشت به صفحه محصولات</a>
                             <a class="continue__shopping--clear" href="{% url 'carts:cart_clean' %}">خالی کردن سبد
                                 خرید</a>
                         </div>

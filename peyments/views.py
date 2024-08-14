@@ -1,12 +1,16 @@
+from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.conf import settings
+from django.urls import reverse
 import requests
 import json
 from carts.cart import Cart
 
 from orders.models import order,order_item
+# from orders.tasks import send_order_email
+from orders.tasks import send_order_email
 from products.models import Property
 
 
@@ -53,25 +57,25 @@ def send_request(request):
                 return redirect(ZP_API_STARTPAY + str(response['Authority']))
             else:
 
-                messages.warning(request,'پرداخت با موفقت انجام نشد')
-                order_obj.peyment_status='لغو شده'
+                messages.warning(request,'پرداخت با موفقیت انجام نشد')
+                order_obj.peyment_status='canceled'
                 order_obj.save()
-                return render(request,'404.html',{"title":'پرداخت با موفقت انجام نشد'})
+                return render(request,'404.html',{"title":'پرداخت با موفقیت انجام نشد'})
         return JsonResponse(response)
 
     except requests.exceptions.Timeout:
-        order_obj.peyment_status='لغو شده'
+        order_obj.peyment_status='canceled'
         order_obj.save()
         return JsonResponse({'status': False, 'code': 'گذر از زمان مجاز'})
     except requests.exceptions.ConnectionError:
         messages.warning(request,'گذر از زمان مجاز')
-        order_obj.peyment_status='لغو شده'
+        order_obj.peyment_status='canceled'
         order_obj.save()
         return render(request,'404.html',{"title":'خظا در برقراری ارتباط'})
     except Exception as e:
         
         messages.warning(request,'خطای ناشناخته')
-        order_obj.peyment_status='لغو شده'
+        order_obj.peyment_status='canceled'
         order_obj.save()
         return render(request,'404.html',{"title":'خطای ناشناخته'})
 
@@ -105,6 +109,7 @@ def verify(request):
 
             if response['Status'] == 100:
                 order_obj.zarinpal_authority = authority
+                order_obj.peyment_status=True
                 order_obj.save()
                 
                 cart=Cart(request)
@@ -115,30 +120,32 @@ def verify(request):
 
                 cart.clear()
                 messages.success(request,'پرداخت شما با موفقیت به پایان رسید و سفارش شما ثبت گردید')
-                order_obj.peyment_status='پرداخت شده'
-                order_obj.order_status='در انتظار تایید'
+                order_link = f"http://toronto7.com{reverse('admin:orders_order_change', args=[order_obj.id])}"
+                send_order_email.delay(order_link,order_obj.id)
+                  
+                
                 return redirect('order_list')
             
             else:
                 messages.warning(request,f'پرداخت با موفقت انجام نشد کد {response["Status"]}')
-                order_obj.peyment_status='لغو شده'
-                order_obj.save()
-                return render(request,'404.html',{"title":f'پرداخت با موفقت انجام نشد کد {response["Status"]}'})
+                order_obj.delete()
+               
+                return redirect('home') 
             
 
     except requests.exceptions.Timeout:
-        order_obj.peyment_status='لغو شده'
+        order_obj.peyment_status='canceled'
         order_obj.save()
         return JsonResponse({'status': False, 'code': 'گذر از زمان مجاز'})
     except requests.exceptions.ConnectionError:
         messages.warning(request,'گذر از زمان مجاز')
-        order_obj.peyment_status='لغو شده'
+        order_obj.peyment_status='canceled'
         order_obj.save()
         return render(request,'404.html',{"title":'خظا در برقراری ارتباط'})
     except Exception as e:
         
         messages.warning(request,'خطای ناشناخته')
-        order_obj.peyment_status='لغو شده'
+        order_obj.peyment_status='canceled'
         order_obj.save()
         return render(request,'404.html',{"title":'خطای ناشناخته'})
 

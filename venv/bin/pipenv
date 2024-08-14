@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/mohamad/Desktop/django/t v3/venv/bin/python3.11" "$0" "$@"
+'''exec' "/Users/mohamad/Desktop/django/t v3/venv/bin/python" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

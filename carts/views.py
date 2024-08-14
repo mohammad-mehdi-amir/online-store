@@ -54,8 +54,11 @@ def add_to_cart_view(request, product_id):
         except Product.DoesNotExist:
             messages.warning(request, Product1.title +'موجودی به اتمام رسیده است')
             return redirect('product_detail',product_id)
+        except order.NotEnoughException as e :
+            messages.warning(request,f'موجودی در این رنگ و این سایز کمتر از سفارش شما است ٫ تعداد موجودی : {e.number}')
+            return redirect('product_detail',product_id)
         except Property.DoesNotExist:
-            messages.warning(request, Product1.title +f' موجودی در رنگ{color1} و سایز {size1} به اتمام رسیده است')
+            messages.warning(request, Product1.title +f' موجودی در رنگ {color1}  و سایز {size1} به اتمام رسیده است')
             return redirect('product_detail',product_id)
             
             

@@ -112,9 +112,9 @@ class slideAdmin(admin.ModelAdmin):
 class DiscountAdmin(ModelAdmin):
     pass
 
-# @admin.register(Wishlist)
-# class WishlistAdmin(ModelAdmin):
-#     list_display=['product','customer']
+@admin.register(Wishlist)
+class WishlistAdmin(ModelAdmin):
+    list_display=['product','user']
     
     
 @admin.register(Color)
