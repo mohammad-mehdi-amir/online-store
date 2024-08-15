@@ -119,5 +119,10 @@ class EmailQueue(models.Model):
 
     def __str__(self):
         return self.email
+    class Meta:
+        """Meta definition for Info."""
+
+        verbose_name = 'ایمیل'
+        verbose_name_plural = 'ایمیل ها'
 
     

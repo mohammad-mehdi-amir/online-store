@@ -137,7 +137,7 @@ class Property(models.Model):
         Product, related_name='propertes', blank=True, null=True, on_delete=models.CASCADE,verbose_name=_('product :'))
     size = models.CharField(max_length=10, choices=OPTIONS, blank=True,verbose_name=_('size'))
     color1 = models.ForeignKey(Color,on_delete=models.DO_NOTHING,blank=True,null=True)
-    number = models.PositiveIntegerField(_('number :'))
+    number = models.PositiveIntegerField(_('number :'),default=1)
 
     def __str__(self) -> str:
         return f'{self.product.title}-{self.size}-{self.color1}'

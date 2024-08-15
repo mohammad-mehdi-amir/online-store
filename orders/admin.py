@@ -62,7 +62,7 @@ class orderAdmin(ModelAdmin):
     @admin.action(description='لیبل های سفارشات ')
     def print_post_label(self,request,queryset):
       
-        return render(request,'orders/post_labels.html ',context={
+        return render(request,'orders/post_labels.html',context={
         'query':queryset
     })
 @admin.register(order_item)

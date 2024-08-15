@@ -20,7 +20,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 
 
-MODE='1'
+MODE='2'
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -119,8 +119,7 @@ TEMPLATES = [
     },
 ]
 #############################
-if MODE!='1':
-    WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
@@ -238,6 +237,7 @@ ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_VERIFICATION="mandatory"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

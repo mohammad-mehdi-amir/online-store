@@ -3,11 +3,13 @@
 {% load i18n %}
 {% autoescape off %}
 {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+سلام به شما از فروشگاه تورنتو
 
-Hello from {{ site_name }}.
-
-If you requested this email please click on the link below:
+اگر درخواست تاییدیه ایمیل داده ایید لطفا از لینک زیر ایمیل خود را تایید بکنید
 {{ activate_url }}
 
+
+با تشکر از شما
+{{site_name}}
 {% endblocktrans %}
 {% endautoescape %}
