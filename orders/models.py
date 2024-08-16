@@ -126,3 +126,5 @@ class EmailQueue(models.Model):
         verbose_name_plural = 'ایمیل ها'
 
     
+    
+    

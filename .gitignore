@@ -1,6 +1,8 @@
-/db.sqlite3
-/510959.txt
-/erl_crash.dump
-/liara_nginx.config
-/liara_nginx.config
-/liara_nginx.config
+# Ignore specific files
+510959.txt
+db.sqlite3
+erl_crash.dump
+liara_nginx.config
+liara.json
+logo.aspx-2.png
+robots.txt

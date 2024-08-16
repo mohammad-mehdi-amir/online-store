@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
 from orders.models import order_item
-from django.db.models import Count,Sum,F
+from django.db.models import Count,Sum,F,Q
 from django.utils.translation import gettext as _
 class PropertyInline(admin.TabularInline):
     model = Property
@@ -39,7 +39,9 @@ class ProductAdmin(ModelAdmin):
     
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        queryset = queryset.annotate(number_sell=Sum(F('order_item__quantity')))
+        queryset = queryset.annotate(number_sell=Sum(F('order_item__quantity'),filter=Q(order_item__order__peyment_status=True)))
+
+        
        
         return queryset
     

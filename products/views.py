@@ -101,8 +101,8 @@ class DeatilProductView(generic.DeleteView):
             if item.size not in size_list :
                    size_list.append(str(item.size))
                    
-            if item.color1 not in color_list :
-                color_list.append(str(item.color1))
+            if item.color1.color1 not in color_list :
+                color_list.append(str(item.color1.color1))
                 
         context['size']=size_list
         context['color']=color_list
