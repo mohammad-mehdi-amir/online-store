@@ -27,9 +27,7 @@ One of the standout features of this project is the fully customized admin panel
 
 The project is fully deployed with a custom domain and is ready for production use.
 
-## Live Demo
 
-You can visit the live site [here](#) (replace `#` with the actual link).
 
 ## Source Code
 
